@@ -1,12 +1,4 @@
-import express from 'express'
-import cors from 'cors'
-import { json } from 'body-parser'
+import { Env, EEnvKey } from './global'
+import { app } from './app'
 
-const app = express()
-
-app.use(cors())
-app.use(json())
-
-app.get('/', (req, res) => res.send({ success: true }))
-
-app.listen(3000, () => console.log('Server started.'))
+app.listen(Env.get(EEnvKey.PORT), () => console.log('Server started.'))
