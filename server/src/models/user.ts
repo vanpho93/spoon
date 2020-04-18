@@ -1,3 +1,10 @@
-export interface IUser {}
+import { ITimed, ETable, createModel } from './shared'
 
-export class User {}
+export interface IUser extends ITimed {
+  userId: number
+  email: string
+  name: string
+  passwordHash: string
+}
+
+export class User extends createModel<IUser>(ETable.USER) {}

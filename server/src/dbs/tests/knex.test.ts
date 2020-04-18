@@ -1,5 +1,6 @@
 import { deepEqual } from 'assert'
 import { TestUtils, knex } from '../../global'
+import { createRequire } from 'module'
 
 const TEST_TITLE = TestUtils.getTestTitle(__filename)
 
@@ -10,4 +11,5 @@ describe(TEST_TITLE, () => {
       [{ result: 2 }]
     )
   })
+  console.log(createRequire('../')(''))
 })

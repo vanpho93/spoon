@@ -1,8 +1,8 @@
 {
-  "name": "training",
+  "name": "spoon",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "Pho Nguyen <pho.nguyenvan@nashtechglobal.com>",
+  "author": "Brian Nguyen <vanpho01@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.19.0",

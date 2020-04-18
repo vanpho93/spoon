@@ -12,10 +12,7 @@ export async function up(knex: Knex): Promise<void> {
       .string('password_hash', 256)
       .notNullable()
     table
-      .string('first_name', 256)
-      .notNullable()
-    table
-      .string('last_name', 256)
+      .string('name', 256)
       .notNullable()
     addCreated(table, knex)
     // indexing
