@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { Env, EEnvKey } from './global'
 import { app } from './app'
 import { RouteLoader } from './app-loader/route-loader'

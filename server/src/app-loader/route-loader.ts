@@ -1,7 +1,7 @@
 import { isNil, defaultTo } from 'lodash'
 
 import { Express } from 'express'
-import { Env, EEnvKey, EEnviroment, UserContextManager, IRoute, ApiError } from '../global'
+import { Env, EEnvKey, EEnviroment, UserContextManager, IRoute, ApiError, EHttpStatusCode } from '../global'
 import { RouteFinder } from './route-finder'
 
 export class RouteLoader {
@@ -10,7 +10,7 @@ export class RouteLoader {
     await Promise.all(routes.map(route => this.appendRoute(app, route)))
   }
 
-  static async appendRoute(app: Express, route: IRoute) {
+  private static async appendRoute(app: Express, route: IRoute) {
     app[route.method](route.path, async (req, res) => {
       try {
         const userContext = await UserContextManager.getUserContext(req)
@@ -18,8 +18,9 @@ export class RouteLoader {
         const result = await service.process()
         res.send({ success: true, result })
       } catch (error) {
-        if (isNil(error.statusCode)) console.error(error)
-        const statusCode = defaultTo(error.statusCode, 500)
+        const isUnexpectedError = isNil(error.statusCode)
+        if (isUnexpectedError) console.error(error)
+        const statusCode = isUnexpectedError ? EHttpStatusCode.INTERNAL_SERVER_ERROR : error.statusCode
         res.status(statusCode).send({ success: false, message: this.getErrorMessage(error) })
       }
     })

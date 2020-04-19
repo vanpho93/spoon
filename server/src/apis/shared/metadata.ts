@@ -16,10 +16,16 @@ export interface IRequest {
   query?: Any
 }
 
+export abstract class BaseApiService {
+  constructor(protected req: IRequest, protected userContext: IUserContext) {}
+
+  abstract process(): Promise<unknown> 
+}
+
 export interface IRoute {
   path: string
   method: EMethod
-  Service: { new (req: IRequest, userContext: IUserContext): { process: () => Promise<unknown> } }
+  Service: { new (req: IRequest, userContext: IUserContext): BaseApiService }
 }
 
 export enum EHttpStatusCode {
