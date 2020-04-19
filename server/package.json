@@ -11,6 +11,7 @@
     "decamelize": "^4.0.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "knex": "^0.20.15",
     "lodash": "^4.17.15",
     "pg": "^8.0.2"
@@ -19,6 +20,7 @@
     "@types/body-parser": "^1.19.0",
     "@types/cors": "^2.8.6",
     "@types/express": "^4.17.3",
+    "@types/jsonwebtoken": "^8.3.9",
     "@types/knex": "^0.16.1",
     "@types/lodash": "^4.14.149",
     "@types/mocha": "^7.0.2",
@@ -31,7 +33,7 @@
     "typescript": "^3.8.3"
   },
   "scripts": {
-    "start": "node dist/index.js",
+    "start": "node --require dotenv/config dist/index.js",
     "dev": "nodemon --exec ts-node src/index.ts",
     "test": "DOTENV_CONFIG_PATH=test.env nodemon --exec mocha dist/**/*.test.js -e ts --recursive",
     "testw": "set DOTENV_CONFIG_PATH=test.env&&nodemon --exec mocha dist/**/*.test.js -e ts --recursive",

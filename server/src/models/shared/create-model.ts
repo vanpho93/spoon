@@ -1,6 +1,6 @@
 import { defaultTo, isNil } from 'lodash'
 import Knex, { QueryBuilder, Transaction as KnexTransaction } from 'knex'
-import { knex, exist } from '../../global'
+import { knex, exists } from '../../global'
 
 interface IBuilderFunction {
   (queryBuilder: QueryBuilder): QueryBuilder
@@ -15,10 +15,10 @@ export function createModel<T>(tableName: string, primaryKey = `${tableName}Id`)
     }
 
     private static getParams(arg1?: KnexTransaction | IBuilderFunction, arg2?: IBuilderFunction): { trx: KnexTransaction | Knex, builder: IBuilderFunction } {
-      if (exist(arg2)) return { trx: defaultTo(arg1 as KnexTransaction, knex), builder: arg2 }
+      if (exists(arg2)) return { trx: defaultTo(arg1 as KnexTransaction, knex), builder: arg2 }
       if (isNil(arg1)) return { trx: knex, builder: query => query }
       // tslint:disable-next-line: no-any
-      const objectIsKnexTransaction = (obj: any) => exist(obj.with)
+      const objectIsKnexTransaction = (obj: any) => exists(obj.with)
       if (objectIsKnexTransaction(arg1)) return { trx: arg1 as KnexTransaction, builder: query => query }
       return { trx: knex, builder: arg1 }
     }

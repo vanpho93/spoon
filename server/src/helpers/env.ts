@@ -1,6 +1,8 @@
 export enum EEnvKey {
   DATABASE_URL = 'DATABASE_URL',
   PORT = 'PORT',
+  JWT_SECRET_KEY = 'JWT_SECRET_KEY',
+  NODE_ENV = 'NODE_ENV',
 }
 
 export enum EEnviroment {

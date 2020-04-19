@@ -11,5 +11,4 @@ describe(TEST_TITLE, () => {
       [{ result: 2 }]
     )
   })
-  console.log(createRequire('../')(''))
 })
