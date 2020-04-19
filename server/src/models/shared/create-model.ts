@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { defaultTo, isNil } from 'lodash'
 import Knex, { QueryBuilder, Transaction as KnexTransaction } from 'knex'
 import { knex, exists } from '../../global'

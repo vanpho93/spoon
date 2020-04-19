@@ -14,8 +14,7 @@ export class RouteLoader {
     app[route.method](route.path, async (req, res) => {
       try {
         const userContext = await UserContextManager.getUserContext(req)
-        const service = new route.Service(req, userContext)
-        const result = await service.process()
+        const result = await route.service.setContext(req, userContext).process()
         res.send({ success: true, result })
       } catch (error) {
         const isUnexpectedError = isNil(error.statusCode)

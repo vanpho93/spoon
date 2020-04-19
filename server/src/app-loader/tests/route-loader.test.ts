@@ -21,7 +21,7 @@ describe(TEST_TITLE, () => {
     td.replace(RouteFinder, 'find', () => [
       {
         path: '/add',
-        Service: AddService,
+        service: new AddService(),
         method: EMethod.GET,
       },
     ])

@@ -4,5 +4,5 @@ import { Service } from './service'
 export const route: IRoute = {
   path: '/user/login',
   method: EMethod.POST,
-  Service,
+  service: new Service(),
 }

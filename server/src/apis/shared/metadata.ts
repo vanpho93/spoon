@@ -17,15 +17,22 @@ export interface IRequest {
 }
 
 export abstract class BaseApiService {
-  constructor(protected req: IRequest, protected userContext: IUserContext) {}
+  protected req: IRequest
+  protected userContext: IUserContext
 
-  abstract process(): Promise<unknown> 
+  abstract process(): Promise<unknown>
+
+  public setContext(req: IRequest, userContext: IUserContext) {
+    this.req = req
+    this.userContext = userContext
+    return this
+  }
 }
 
 export interface IRoute {
   path: string
   method: EMethod
-  Service: { new (req: IRequest, userContext: IUserContext): BaseApiService }
+  service: BaseApiService
 }
 
 export enum EHttpStatusCode {
