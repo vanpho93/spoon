@@ -5,7 +5,7 @@ export async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable('listener', table => {
   addCascadeForeignKey(table, 'user', {})
   table.primary(['user_id'])
-  table.integer('followed_count', 10)
+  table.integer('followed_count', 10).defaultTo(0)
   addCreated(table, knex)
 })
 await addModified('listener', knex)

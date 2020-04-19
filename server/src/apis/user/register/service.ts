@@ -43,7 +43,11 @@ export class ApiExcutor extends AbstractApiExcutor<IInput, IOutput> {
     }
 
     const token = await JWT.createToken({ userId: user.userId, accountType: this.input.accountType })
-    return { ...omit(user, 'passworhash'), token }
+    return {
+      ...omit(user, 'passworHash'),
+      accountType: this.input.accountType,
+      token,
+    }
   }
 }
 
