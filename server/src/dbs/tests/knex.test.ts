@@ -1,6 +1,5 @@
 import { deepEqual } from 'assert'
 import { TestUtils, knex } from '../../global'
-import { createRequire } from 'module'
 
 const TEST_TITLE = TestUtils.getTestTitle(__filename)
 

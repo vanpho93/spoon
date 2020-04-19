@@ -1,4 +1,4 @@
-import { IUserContext } from './user-context'
+import { IUserContext, UserContext } from './user-context'
 import { IRequest } from '.'
 
 export interface AbstractInputGetter<T> {
@@ -9,7 +9,7 @@ export abstract class AbstractInputValidator<Input> {
   protected input: Input
   protected userContext: IUserContext
 
-  validate(input: Input, userContext: IUserContext): Promise<void> {
+  validate(input: Input, userContext: IUserContext = new UserContext()): Promise<void> {
     this.input = input
     this.userContext = userContext
     return this.check()
@@ -22,7 +22,7 @@ export abstract class AbstractApiExcutor<Input, Output> {
   protected input: Input
   protected userContext: IUserContext
 
-  excute(input: Input, userContext: IUserContext): Promise<Output> {
+  excute(input: Input, userContext: IUserContext = new UserContext()): Promise<Output> {
     this.input = input
     this.userContext = userContext
     return this.process()
@@ -33,9 +33,9 @@ export abstract class AbstractApiExcutor<Input, Output> {
 
 export abstract class ApiService<Input = void, Output = void> {
   input: Input
-  protected inputGetter: AbstractInputGetter<Input>
-  protected inputValidator: AbstractInputValidator<Input>
-  protected excutor: AbstractApiExcutor<Input, Output>
+  abstract inputGetter: AbstractInputGetter<Input>
+  abstract inputValidator: AbstractInputValidator<Input>
+  abstract excutor: AbstractApiExcutor<Input, Output>
 
   constructor(private req: IRequest, public userContext: IUserContext) {}
 
