@@ -1,6 +1,6 @@
-import { TestUtils, FollowingRelationship, TestUserContextBuilder, IUserContext, Dj, Listener } from '../../../../global'
+import { TestUtils, FollowingRelationship, TestUserContextBuilder, IUserContext, Dj, Listener, LazyFanCounter, deepOmit } from '../../../../global'
 import { ApiExcutor } from '../service'
-import { ok, equal } from 'assert'
+import { ok, equal, deepEqual } from 'assert'
 import { isNil } from 'lodash'
 
 const TEST_TITLE = TestUtils.getTestTitle(__filename)
@@ -30,7 +30,10 @@ describe(TEST_TITLE, () => {
     const relationship = await FollowingRelationship.findOne({ listenerId: listener.userId, djId: dj.userId })
     ok(isNil(relationship))
 
-    equal((await Dj.findById(dj.userId)).followerCount, -1)
     equal((await Listener.findById(listener.userId)).followedCount, -1)
+    deepEqual(
+      deepOmit(await LazyFanCounter.findAll({}), ['lazyFanCounterId']),
+      [{ djId: dj.userId, change: -1 }]
+    )
   })
 })

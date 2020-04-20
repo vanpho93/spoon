@@ -1,4 +1,4 @@
-import { Dj, FollowingRelationship, BlockRelationship, Listener, User } from '../../../global'
+import { Dj, FollowingRelationship, BlockRelationship, Listener, User, LazyFanCounter } from '../../../global'
 import {
   ApiService, AbstractInputGetter, IRequest, AbstractApiExcutor,
   makeSure, mustExist, MustBeUserInputValidator,
@@ -43,7 +43,10 @@ export class ApiExcutor extends AbstractApiExcutor<IInput, IOutput> {
     const isFollowing = await FollowingRelationship.findOneAndDelete({ listenerId, djId })
     if (!isFollowing) return
     await Listener.findByIdAndUpdate(listenerId, {}, builder => builder.decrement('followedCount'))
-    await Dj.findByIdAndUpdate(djId, {}, builder => builder.decrement('followerCount'))
+    await LazyFanCounter.create({
+      djId,
+      change: -1,
+    })
   }
 }
 

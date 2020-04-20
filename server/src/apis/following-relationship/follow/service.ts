@@ -1,5 +1,5 @@
 import { isNil } from 'lodash'
-import { Dj, IUser, FollowingRelationship, BlockRelationship, Listener } from '../../../global'
+import { Dj, IUser, FollowingRelationship, BlockRelationship, Listener, LazyFanCounter } from '../../../global'
 import {
   ApiService, AbstractInputGetter, MustBeListenerInputValidator,
   IRequest, AbstractApiExcutor, makeSure, mustExist,
@@ -45,11 +45,10 @@ export class ApiExcutor extends AbstractApiExcutor<IInput, IOutput> {
       {},
       builder => builder.increment('followedCount')
     )
-    await Dj.findByIdAndUpdate(
-      this.input.djId,
-      {},
-      builder => builder.increment('followerCount')
-    )
+    await LazyFanCounter.create({
+      djId: this.input.djId,
+      change: 1,
+    })
   }
 }
 

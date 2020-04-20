@@ -1,6 +1,6 @@
-import { TestUtils, FollowingRelationship, TestUserContextBuilder, IUserContext, Dj, Listener } from '../../../../global'
+import { TestUtils, FollowingRelationship, deepOmit, TestUserContextBuilder, IUserContext, Dj, Listener, LazyFanCounter } from '../../../../global'
 import { ApiExcutor } from '../service'
-import { ok, equal } from 'assert'
+import { ok, equal, deepEqual } from 'assert'
 
 const TEST_TITLE = TestUtils.getTestTitle(__filename)
 
@@ -24,8 +24,10 @@ describe(TEST_TITLE, () => {
     await new ApiExcutor().excute({ djId: dj.userId }, listener)
     const relationship = await FollowingRelationship.findOne({ listenerId: listener.userId, djId: dj.userId })
     ok(relationship)
-
-    equal((await Dj.findById(dj.userId)).followerCount, 1)
     equal((await Listener.findById(listener.userId)).followedCount, 1)
+    deepEqual(
+      deepOmit(await LazyFanCounter.findAll({}), ['lazyFanCounterId']),
+      [{ djId: dj.userId, change: 1 }]
+    )
   })
 })
