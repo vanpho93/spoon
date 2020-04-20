@@ -14,6 +14,7 @@ export class InputGetter implements AbstractInputGetter<IInput> {
 
 export class InputValidator extends MustBeListenerInputValidator<IInput> {
   async check() {
+    await super.check()
     const currentRlationship = await FollowingRelationship.findOne({
       followerId: this.userContext.userId,
       djId: this.input.djId,

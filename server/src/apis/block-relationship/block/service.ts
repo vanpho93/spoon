@@ -13,6 +13,7 @@ export class InputGetter implements AbstractInputGetter<IInput> {
 
 export class InputValidator extends MustBeUserInputValidator<IInput> {
   async check() {
+    await super.check()
     const isBlocked = await BlockRelationship.isRelationshipBlocked(
       this.userContext.userId,
       this.input.userId

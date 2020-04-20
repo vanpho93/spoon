@@ -19,25 +19,18 @@ describe(TEST_TITLE, () => {
       .create({ email: 'dj@gmail.com' })
       .isDj()
       .build()
+    await BlockRelationship.create({ blockeeId: listener.userId, blockerId: dj.userId })
   })
 
   it(`${TEST_TITLE} InputValidator works with valid input`, async () => {
     await new InputValidator().validate({ userId: dj.userId }, listener)
   })
 
-  it(`${TEST_TITLE} Given blocked users, it should throw an error`, async () => {
-    await BlockRelationship.create({ blockeeId: listener.userId, blockerId: dj.userId })
+  it(`${TEST_TITLE} Given not blocked users, it should throw an error`, async () => {
+    await BlockRelationship.findOneAndDelete({ blockeeId: listener.userId, blockerId: dj.userId })
     const error = await new InputValidator()
       .validate({ userId: dj.userId }, listener)
       .catch(error => error)
-    equal(error.message, EError.ALREADY_BLOCKED)
-  })
-
-  it(`${TEST_TITLE} Given non existed djId, it should throw an error`, async () => {
-    const NEVER_EXISTS_DJ_ID = 0
-    const error = await new InputValidator()
-      .validate({ userId: NEVER_EXISTS_DJ_ID }, listener)
-      .catch(error => error)
-    equal(error.message, EError.CANNOT_FIND_USER)
+    equal(error.message, EError.NOT_BLOCKED)
   })
 })
