@@ -1,6 +1,7 @@
 import { IUserContext, UserContext } from './user-context'
 import { IRequest } from '.'
 import { BaseApiService } from './metadata'
+import { makeSure } from './utils'
 
 export interface AbstractInputGetter<T> {
   getInput(req: IRequest): T
@@ -51,8 +52,28 @@ export class NullInputGetter implements AbstractInputGetter<null> {
   }
 }
 
-export class SkippedInputValidator extends AbstractInputValidator<any> {
+export class SkippedInputValidator extends AbstractInputValidator<null> {
   check(): Promise<void> {
     return
+  }
+}
+
+export class MustBeUserInputValidator<Input> extends AbstractInputValidator<Input>{
+  async check(): Promise<void> {
+    makeSure(this.userContext.isUser)
+  }
+}
+
+export class MustBeListenerInputValidator<Input> extends MustBeUserInputValidator<Input> {
+  async check(): Promise<void> {
+    await super.check()
+    makeSure(this.userContext.isListener)
+  }
+}
+
+export class MustBeDjInputValidator<Input> extends MustBeUserInputValidator<Input> {
+  async check(): Promise<void> {
+    await super.check()
+    makeSure(this.userContext.isDj)
   }
 }

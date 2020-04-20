@@ -1,6 +1,6 @@
 import { TestUtils, EAccountType, User } from '../../../../global'
 import { InputValidator } from '../service'
-import { doesNotThrow, equal } from 'assert'
+import { equal } from 'assert'
 import { EError, IInput } from '../metadata'
 
 const TEST_TITLE = TestUtils.getTestTitle(__filename)
@@ -14,9 +14,7 @@ describe(TEST_TITLE, () => {
   }
 
   it(`${TEST_TITLE} InputValidator works with valid input`, async () => {
-    doesNotThrow(async () => {
-      await new InputValidator().validate(sampleInput)
-    })
+    await new InputValidator().validate(sampleInput)
   })
 
   it(`${TEST_TITLE} Given invalid password, it should throw an error`, async () => {
