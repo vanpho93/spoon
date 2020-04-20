@@ -46,7 +46,7 @@ export enum EHttpStatusCode {
 }
 
 export class ApiError extends Error {
-  constructor(message: string, public statusCode = EHttpStatusCode.BAD_REQEUEST) {
+  constructor(message: string, public statusCode: EHttpStatusCode) {
     super(message)
   }
 }

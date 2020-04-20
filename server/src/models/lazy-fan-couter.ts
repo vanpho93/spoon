@@ -1,6 +1,7 @@
 import { ETable, createModel } from './shared'
 
 export interface ILazyFanCounter {
+  lazyFanCounterId: number
   djId: number
   change: number
 }

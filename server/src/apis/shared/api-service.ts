@@ -70,10 +70,3 @@ export class MustBeListenerInputValidator<Input> extends MustBeUserInputValidato
     makeSure(this.userContext.isListener, 'MUST_BE_LISTENER')
   }
 }
-
-export class MustBeDjInputValidator<Input> extends MustBeUserInputValidator<Input> {
-  async check(): Promise<void> {
-    await super.check()
-    makeSure(this.userContext.isDj, 'MUST_BE_DJ')
-  }
-}

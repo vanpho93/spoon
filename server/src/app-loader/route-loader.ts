@@ -1,7 +1,7 @@
 import { isNil, defaultTo } from 'lodash'
 
 import { Express } from 'express'
-import { Env, EEnvKey, EEnviroment, UserContextManager, IRoute, ApiError, EHttpStatusCode } from '../global'
+import { Env, EEnvKey, EEnviroment, UserContextManager, IRoute, ApiError, EHttpStatusCode, handleUnexpectedError } from '../global'
 import { RouteFinder } from './route-finder'
 
 export class RouteLoader {
@@ -18,7 +18,7 @@ export class RouteLoader {
         res.send({ success: true, result })
       } catch (error) {
         const isUnexpectedError = isNil(error.statusCode)
-        if (isUnexpectedError) console.error(error)
+        if (isUnexpectedError) handleUnexpectedError(error)
         const statusCode = isUnexpectedError ? EHttpStatusCode.INTERNAL_SERVER_ERROR : error.statusCode
         res.status(statusCode).send({ success: false, message: this.getErrorMessage(error) })
       }

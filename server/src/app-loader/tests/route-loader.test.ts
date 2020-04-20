@@ -3,7 +3,7 @@ import td from 'testdouble'
 import express from 'express'
 import request from 'supertest'
 import { deepEqual, equal } from 'assert'
-import { TestUtils, EHttpStatusCode, EEnviroment, EMethod, BaseApiService, makeSure, Env } from '../../global'
+import { TestUtils, EHttpStatusCode, EEnviroment, EMethod, BaseApiService, makeSure, Env, handleUnexpectedError } from '../../global'
 import { RouteLoader } from '../route-loader'
 import { RouteFinder } from '../route-finder'
 
@@ -26,7 +26,7 @@ describe(TEST_TITLE, () => {
         method: EMethod.GET,
       },
     ])
-    td.replace(console, 'error')
+    td.replace(require('../../global'), 'handleUnexpectedError')
   })
 
   it(`${TEST_TITLE} RouteLoader works`, async () => {
@@ -62,7 +62,7 @@ describe(TEST_TITLE, () => {
         status: EHttpStatusCode.INTERNAL_SERVER_ERROR,
       }  
     )
-    td.verify(console.error(new Error('INVALID_PARAM_A')))
+    td.verify(handleUnexpectedError(new Error('INVALID_PARAM_A')))
 
     // unhandled error in prod env
     td.replace(Env, 'get', () => EEnviroment.PRODUCTION)

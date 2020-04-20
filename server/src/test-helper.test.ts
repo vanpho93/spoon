@@ -1,5 +1,5 @@
 import td from 'testdouble'
-import { User, Dj, FollowingRelationship, Listener, BlockRelationship, LazyFanCounter } from './global'
+import { User, Dj, FollowingRelationship, Listener, BlockRelationship, LazyFanCounter, knex } from './global'
 
 beforeEach(async () => {
   await User.deleteMany({})
@@ -12,4 +12,9 @@ beforeEach(async () => {
 
 afterEach(() => {
   td.reset()
+})
+
+after(async () => {
+  await knex.destroy()
+  setTimeout(() => process.exit(0), 1000)
 })
