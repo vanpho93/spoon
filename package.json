@@ -6,7 +6,7 @@
   "author": "Pho Nguyen <vanpho02@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "cd scripts && chmod u+x release.sh && ./prepare.sh",
+    "build": "cd scripts && chmod u+x prepare.sh && ./prepare.sh",
     "start": "cd server && yarn start",
     "deploy": "git push origin -f --no-verify HEAD:development"
   },
