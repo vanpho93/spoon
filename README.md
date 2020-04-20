@@ -1,11 +1,12 @@
 # Spoon API
 
 ## Enviroment setup
- 0. Install postgresql on your local machine
- 1. Copy sample.env to .env on /database
- 2. Copy sample.env to .env on /server
- 3. yarn build
- 4. yarn start
+ 0. Install `NodeJS`, `yarn`, `postgresql` on your local machine
+ 1. Copy sample.env to .env on `/database`
+ 2. Copy sample.env to .env on `/server`
+ 3. Build project: `yarn build`
+ 4. Create database: `cd database && yarn db:reset && cd ..` 
+ 5. Start: `yarn start`
 
 ## Demo
   Live demo can be found at [here](https://xspoon.herokuapp.com).

@@ -32,7 +32,8 @@ async function start() {
     `)
     await tempKnex.raw(`DROP DATABASE ${DATABASE_NAME}`)
   } catch (error) {
-    console.log(error)
+    console.log(error.message)
+    console.log('Continue...')
   } finally {
     await tempKnex.raw(`CREATE DATABASE ${DATABASE_NAME}`)
     const output = await execCommand('npm run knex:latest')
