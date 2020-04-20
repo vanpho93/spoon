@@ -1,0 +1,1 @@
+cd ../database && yarn && cd ..
