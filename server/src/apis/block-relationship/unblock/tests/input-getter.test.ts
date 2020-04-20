@@ -8,7 +8,7 @@ describe(TEST_TITLE, () => {
   it(`${TEST_TITLE} InputGetter works`, async () => {
     deepEqual(
       new InputGetter().getInput({ body: { userId: ' 1' } }),
-      { userId: 1 },
+      { userId: 1 }
     )
   })
 })

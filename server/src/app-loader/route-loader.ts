@@ -1,7 +1,9 @@
-import { isNil, defaultTo } from 'lodash'
-
+import { isNil } from 'lodash'
 import { Express } from 'express'
-import { Env, EEnvKey, EEnviroment, UserContextManager, IRoute, ApiError, EHttpStatusCode, handleUnexpectedError } from '../global'
+import {
+  Env, EEnvKey, EEnviroment, UserContextManager, IRoute,
+  ApiError, EHttpStatusCode, handleUnexpectedError,
+} from '../global'
 import { RouteFinder } from './route-finder'
 
 export class RouteLoader {

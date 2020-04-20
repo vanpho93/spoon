@@ -13,7 +13,7 @@ export class JWT {
       })
     })
   }
-  
+
   public static verifyToken<T>(token: string): Promise<T & { iat: number, exp: number }> {
     return new Promise((resolve, reject) => {
       verify(token, JWT_SECRET_KEY, (error: VerifyErrors, decoded: object) => {

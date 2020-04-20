@@ -1,12 +1,12 @@
 import { isNil } from 'lodash'
-import { Dj, IUser, FollowingRelationship, BlockRelationship, Listener, LazyFanCounter } from '../../../global'
+import { Dj, FollowingRelationship, BlockRelationship, Listener, LazyFanCounter } from '../../../global'
 import {
-  ApiService, AbstractInputGetter, MustBeListenerInputValidator,
+  ApiService, IAbstractInputGetter, MustBeListenerInputValidator,
   IRequest, AbstractApiExcutor, makeSure, mustExist,
 } from '../../shared'
 import { IInput, IOutput, EError } from './metadata'
 
-export class InputGetter implements AbstractInputGetter<IInput> {
+export class InputGetter implements IAbstractInputGetter<IInput> {
   getInput(req: IRequest): IInput {
     return { djId: Number(req.body.djId) }
   }
@@ -33,8 +33,6 @@ export class InputValidator extends MustBeListenerInputValidator<IInput> {
 }
 
 export class ApiExcutor extends AbstractApiExcutor<IInput, IOutput> {
-  private user: IUser
-  
   async process() {
     await FollowingRelationship.create({
       listenerId: this.userContext.userId,

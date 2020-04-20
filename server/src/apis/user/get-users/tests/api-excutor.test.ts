@@ -37,7 +37,7 @@ describe(TEST_TITLE, () => {
           email: 'u2-listener@gmail.com',
           name: 'First Last',
           accountType: EAccountType.LISTENER,
-        }
+        },
       ]
     )
 

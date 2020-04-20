@@ -6,7 +6,7 @@ import { map } from 'lodash'
 export class RouteFinder {
   static getPaths() {
     const result: string[] = []
-  
+
     const scanFolder = (filePath = join(__dirname, '..', 'apis')) => {
       const children = readdirSync(filePath)
       children.forEach(child => {

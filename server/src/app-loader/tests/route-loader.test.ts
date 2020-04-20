@@ -2,8 +2,11 @@ import { pick } from 'lodash'
 import td from 'testdouble'
 import express from 'express'
 import request from 'supertest'
-import { deepEqual, equal } from 'assert'
-import { TestUtils, EHttpStatusCode, EEnviroment, EMethod, BaseApiService, makeSure, Env, handleUnexpectedError } from '../../global'
+import { deepEqual } from 'assert'
+import {
+  TestUtils, EHttpStatusCode, EEnviroment, EMethod,
+  makeSure, Env, handleUnexpectedError, BaseApiService,
+} from '../../global'
 import { RouteLoader } from '../route-loader'
 import { RouteFinder } from '../route-finder'
 
@@ -26,6 +29,8 @@ describe(TEST_TITLE, () => {
         method: EMethod.GET,
       },
     ])
+
+    // tslint:disable-next-line: no-require-imports
     td.replace(require('../../global'), 'handleUnexpectedError')
   })
 
@@ -40,7 +45,7 @@ describe(TEST_TITLE, () => {
       {
         body: { success: true, result: 3 },
         status: EHttpStatusCode.OK,
-      }  
+      }
     )
 
     // handled error
@@ -50,7 +55,7 @@ describe(TEST_TITLE, () => {
       {
         body: { success: false, message: 'INVALID_PARA_B' },
         status: EHttpStatusCode.BAD_REQEUEST,
-      }  
+      }
     )
 
     // unhandled error in dev envs
@@ -60,7 +65,7 @@ describe(TEST_TITLE, () => {
       {
         body: { success: false, message: 'INVALID_PARAM_A' },
         status: EHttpStatusCode.INTERNAL_SERVER_ERROR,
-      }  
+      }
     )
     td.verify(handleUnexpectedError(new Error('INVALID_PARAM_A')))
 
@@ -72,7 +77,7 @@ describe(TEST_TITLE, () => {
       {
         body: { success: false, message: 'INTERNAL_SERVER_ERROR' },
         status: EHttpStatusCode.INTERNAL_SERVER_ERROR,
-      }  
+      }
     )
 
     // invalid route
@@ -82,7 +87,7 @@ describe(TEST_TITLE, () => {
       {
         body: { success: false, message: 'INVALID_ROUTE' },
         status: EHttpStatusCode.NOT_FOUND,
-      }  
+      }
     )
   })
 })

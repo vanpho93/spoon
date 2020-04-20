@@ -1,11 +1,11 @@
-import { Dj, FollowingRelationship, BlockRelationship, Listener, User, LazyFanCounter } from '../../../global'
+import { FollowingRelationship, BlockRelationship, Listener, User, LazyFanCounter } from '../../../global'
 import {
-  ApiService, AbstractInputGetter, IRequest, AbstractApiExcutor,
+  ApiService, IAbstractInputGetter, IRequest, AbstractApiExcutor,
   makeSure, mustExist, MustBeUserInputValidator,
 } from '../../shared'
 import { IInput, IOutput, EError } from './metadata'
 
-export class InputGetter implements AbstractInputGetter<IInput> {
+export class InputGetter implements IAbstractInputGetter<IInput> {
   getInput(req: IRequest): IInput {
     return { userId: Number(req.body.userId) }
   }
@@ -35,7 +35,7 @@ export class ApiExcutor extends AbstractApiExcutor<IInput, IOutput> {
   }
 
   private async unfollow() {
-    if (this.userContext.isDj) return await this.unfollowByIds(this.input.userId, this.userContext.userId)
+    if (this.userContext.isDj) return this.unfollowByIds(this.input.userId, this.userContext.userId)
     await this.unfollowByIds(this.userContext.userId, this.input.userId)
   }
 

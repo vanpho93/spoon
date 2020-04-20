@@ -1,4 +1,4 @@
-import { TestUtils, TestUserContextBuilder, EAccountType, IUserContext } from '../../../../global'
+import { TestUtils, TestUserContextBuilder, IUserContext } from '../../../../global'
 import { ApiExcutor } from '../service'
 import { deepEqual } from 'assert'
 import { omit } from 'lodash'

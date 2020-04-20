@@ -1,11 +1,11 @@
-import { IUser, FollowingRelationship, Listener, LazyFanCounter } from '../../../global'
+import { FollowingRelationship, Listener, LazyFanCounter } from '../../../global'
 import {
-  ApiService, AbstractInputGetter, MustBeListenerInputValidator,
+  ApiService, IAbstractInputGetter, MustBeListenerInputValidator,
   IRequest, AbstractApiExcutor, mustExist,
 } from '../../shared'
 import { IInput, IOutput, EError } from './metadata'
 
-export class InputGetter implements AbstractInputGetter<IInput> {
+export class InputGetter implements IAbstractInputGetter<IInput> {
   getInput(req: IRequest): IInput {
     return { djId: Number(req.body.djId) }
   }
@@ -23,8 +23,6 @@ export class InputValidator extends MustBeListenerInputValidator<IInput> {
 }
 
 export class ApiExcutor extends AbstractApiExcutor<IInput, IOutput> {
-  private user: IUser
-  
   async process() {
     await FollowingRelationship.findOneAndDelete({
       listenerId: this.userContext.userId,

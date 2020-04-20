@@ -45,7 +45,8 @@
     "test": "DOTENV_CONFIG_PATH=test.env nodemon --exec mocha dist/**/*.test.js -e ts --recursive",
     "testw": "set DOTENV_CONFIG_PATH=test.env&&nodemon --exec mocha dist/**/*.test.js -e ts --recursive",
     "coverage-test": "DOTENV_CONFIG_PATH=test.env nyc mocha src/**/*.test.ts -e ts --recursive",
-    "coverage-testw": "set DOTENV_CONFIG_PATH=test.env&&nyc mocha src/**/*.test.ts -e ts --recursive"
+    "coverage-testw": "set DOTENV_CONFIG_PATH=test.env&&nyc mocha src/**/*.test.ts -e ts --recursive",
+    "tslint": "tslint --project tsconfig.json --config tslint.json"
   },
   "mocha": {
     "full-trace": true,

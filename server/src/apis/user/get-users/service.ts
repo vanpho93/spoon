@@ -1,18 +1,18 @@
 import { User, Dj } from '../../../global'
 import {
-  ApiService, AbstractInputGetter, IRequest,
+  ApiService, IAbstractInputGetter, IRequest,
   AbstractApiExcutor, SkippedInputValidator, EAccountType,
 } from '../../shared'
 import { IInput, IOutput } from './metadata'
 import { defaultTo, map, find } from 'lodash'
 
-export class InputGetter implements AbstractInputGetter<IInput> {
+export class InputGetter implements IAbstractInputGetter<IInput> {
   getInput(req: IRequest): IInput {
     const DEFAULT_PAGE_SIZE = 10
     const DEFAULT_PAGE = 1
     return {
       pageSize: Number(defaultTo(req.query.pageSize, DEFAULT_PAGE_SIZE)),
-      page: Number(defaultTo(req.query.page, DEFAULT_PAGE))
+      page: Number(defaultTo(req.query.page, DEFAULT_PAGE)),
     }
   }
 }

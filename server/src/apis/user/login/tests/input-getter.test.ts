@@ -1,4 +1,4 @@
-import { TestUtils, IRequest, EAccountType } from '../../../../global'
+import { TestUtils, IRequest } from '../../../../global'
 import { InputGetter } from '../service'
 import { deepEqual } from 'assert'
 
@@ -17,7 +17,7 @@ describe(TEST_TITLE, () => {
       {
         email: 'example@gmail.com',
         password: 'sample \n',
-      },
+      }
     )
   })
 })

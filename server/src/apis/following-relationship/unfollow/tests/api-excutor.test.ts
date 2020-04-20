@@ -1,4 +1,7 @@
-import { TestUtils, FollowingRelationship, TestUserContextBuilder, IUserContext, Dj, Listener, LazyFanCounter, deepOmit } from '../../../../global'
+import {
+  TestUtils, FollowingRelationship, TestUserContextBuilder,
+  IUserContext, Listener, LazyFanCounter, deepOmit,
+} from '../../../../global'
 import { ApiExcutor } from '../service'
 import { ok, equal, deepEqual } from 'assert'
 import { isNil } from 'lodash'

@@ -2,8 +2,7 @@ import { hashSync } from 'bcrypt'
 import { TestUtils, User } from '../../../../global'
 import { InputValidator } from '../service'
 import { equal } from 'assert'
-import { EError, IInput } from '../metadata'
-
+import { EError } from '../metadata'
 
 const TEST_TITLE = TestUtils.getTestTitle(__filename)
 

@@ -7,8 +7,8 @@ const TEST_TITLE = TestUtils.getTestTitle(__filename)
 describe(TEST_TITLE, () => {
   it(`${TEST_TITLE} InputGetter works`, async () => {
     deepEqual(
-      new InputGetter().getInput({ body: { djId: ' 1' } }),
-      { djId: 1 },
+      new InputGetter().getInput({ params: { djId: ' 1' } }),
+      { djId: 1 }
     )
   })
 })

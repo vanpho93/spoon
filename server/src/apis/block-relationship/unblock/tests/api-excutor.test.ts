@@ -1,6 +1,6 @@
-import { TestUtils, FollowingRelationship, TestUserContextBuilder, IUserContext, BlockRelationship, Dj, Listener } from '../../../../global'
+import { TestUtils, TestUserContextBuilder, IUserContext, BlockRelationship } from '../../../../global'
 import { ApiExcutor } from '../service'
-import { ok, equal } from 'assert'
+import { ok } from 'assert'
 import { isNil } from 'lodash'
 
 const TEST_TITLE = TestUtils.getTestTitle(__filename)
@@ -19,7 +19,7 @@ describe(TEST_TITLE, () => {
       .create({ email: 'dj@gmail.com' })
       .isDj()
       .build()
-    
+
     await BlockRelationship.findOne({ blockerId: listener.userId, blockeeId: dj.userId })
   })
 

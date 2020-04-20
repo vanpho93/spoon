@@ -1,4 +1,4 @@
-import { TestUtils, TestUserContextBuilder, IUserContext, BlockRelationship, FollowingRelationship } from '../../../../global'
+import { TestUtils, TestUserContextBuilder, IUserContext, BlockRelationship } from '../../../../global'
 import { InputValidator } from '../service'
 import { equal } from 'assert'
 import { EError } from '../metadata'

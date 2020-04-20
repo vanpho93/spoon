@@ -3,7 +3,7 @@ import { IRequest } from '.'
 import { BaseApiService } from './metadata'
 import { makeSure } from './utils'
 
-export interface AbstractInputGetter<T> {
+export interface IAbstractInputGetter<T> {
   getInput(req: IRequest): T
 }
 
@@ -35,7 +35,7 @@ export abstract class AbstractApiExcutor<Input, Output> {
 
 export abstract class ApiService<Input = void, Output = void> extends BaseApiService {
   input: Input
-  abstract inputGetter: AbstractInputGetter<Input>
+  abstract inputGetter: IAbstractInputGetter<Input>
   abstract inputValidator: AbstractInputValidator<Input>
   abstract excutor: AbstractApiExcutor<Input, Output>
 
@@ -46,7 +46,7 @@ export abstract class ApiService<Input = void, Output = void> extends BaseApiSer
   }
 }
 
-export class NullInputGetter implements AbstractInputGetter<null> {
+export class NullInputGetter implements IAbstractInputGetter<null> {
   getInput(_: IRequest): null {
     return null
   }
@@ -58,7 +58,7 @@ export class SkippedInputValidator extends AbstractInputValidator<null> {
   }
 }
 
-export class MustBeUserInputValidator<Input> extends AbstractInputValidator<Input>{
+export class MustBeUserInputValidator<Input> extends AbstractInputValidator<Input> {
   async check(): Promise<void> {
     makeSure(this.userContext.isUser, 'MUST_BE_USER')
   }

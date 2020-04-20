@@ -1,12 +1,12 @@
 import { omit } from 'lodash'
 import { User, Dj, BlockRelationship } from '../../../global'
 import {
-  ApiService, AbstractInputGetter, IRequest,
+  ApiService, IAbstractInputGetter, IRequest,
   AbstractApiExcutor, MustBeUserInputValidator, makeSure, mustExist,
 } from '../../shared'
 import { IInput, IOutput, EError } from './metadata'
 
-export class InputGetter implements AbstractInputGetter<IInput> {
+export class InputGetter implements IAbstractInputGetter<IInput> {
   getInput(req: IRequest): IInput {
     return { djId: Number(req.params.djId) }
   }

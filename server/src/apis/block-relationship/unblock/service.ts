@@ -1,11 +1,11 @@
 import { BlockRelationship } from '../../../global'
 import {
-  ApiService, AbstractInputGetter, IRequest, AbstractApiExcutor,
+  ApiService, IAbstractInputGetter, IRequest, AbstractApiExcutor,
   makeSure, MustBeUserInputValidator,
 } from '../../shared'
 import { IInput, IOutput, EError } from './metadata'
 
-export class InputGetter implements AbstractInputGetter<IInput> {
+export class InputGetter implements IAbstractInputGetter<IInput> {
   getInput(req: IRequest): IInput {
     return { userId: Number(req.body.userId) }
   }

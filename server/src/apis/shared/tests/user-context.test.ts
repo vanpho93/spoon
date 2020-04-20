@@ -19,7 +19,7 @@ describe(TEST_TITLE, () => {
     const userContext = await UserContextManager.getUserContext({ headers: { token: 'a.b.c' } })
     deepEqual(userContext, { userId: undefined, accountType: undefined })
   })
-  
+
   it(`${TEST_TITLE} UserContextManager works with no token`, async () => {
     const userContext = await UserContextManager.getUserContext({ headers: {} })
     deepEqual(userContext, { userId: undefined, accountType: undefined })

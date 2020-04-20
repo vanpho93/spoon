@@ -32,7 +32,7 @@ export class UserContextManager {
       const { userId, accountType } = await JWT.verifyToken<{ userId: number, accountType: EAccountType }>(token)
       return new UserContext(userId, accountType)
     } catch (error) {
-      return new UserContext()      
+      return new UserContext()
     }
   }
 }

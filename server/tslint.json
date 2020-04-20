@@ -60,7 +60,6 @@
     "no-debugger": true,
     "no-empty": true,
     "no-eval": true,
-    "restrict-plus-operands": true,
     "switch-default": true,
     "triple-equals": true,
     "use-isnan": true,

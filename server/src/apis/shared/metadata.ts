@@ -7,6 +7,7 @@ export enum EMethod {
   DELETE = 'delete',
 }
 
+// tslint:disable-next-line: no-any
 type Any = any
 
 export interface IRequest {

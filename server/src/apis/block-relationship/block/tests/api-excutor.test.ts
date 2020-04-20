@@ -1,4 +1,7 @@
-import { TestUtils, FollowingRelationship, TestUserContextBuilder, IUserContext, BlockRelationship, Dj, Listener, LazyFanCounter, deepOmit } from '../../../../global'
+import {
+  TestUtils, FollowingRelationship, TestUserContextBuilder, IUserContext,
+  BlockRelationship, Listener, LazyFanCounter, deepOmit,
+} from '../../../../global'
 import { ApiExcutor } from '../service'
 import { ok, equal, deepEqual } from 'assert'
 import { isNil } from 'lodash'
@@ -32,14 +35,14 @@ describe(TEST_TITLE, () => {
       listenerId: listener.userId,
       djId: dj.userId,
     })
-    
+
     await new ApiExcutor().excute({ userId: dj.userId }, listener)
     equal((await Listener.findById(listener.userId)).followedCount, -1)
     deepEqual(
       deepOmit(await LazyFanCounter.findAll({}), ['lazyFanCounterId']),
       [{ djId: dj.userId, change: -1 }]
     )
-    
+
     const relationship = await FollowingRelationship.findOne({
       listenerId: listener.userId,
       djId: dj.userId,
@@ -52,7 +55,7 @@ describe(TEST_TITLE, () => {
       listenerId: listener.userId,
       djId: dj.userId,
     })
-    
+
     await new ApiExcutor().excute({ userId: listener.userId }, dj)
 
     equal((await Listener.findById(listener.userId)).followedCount, -1)

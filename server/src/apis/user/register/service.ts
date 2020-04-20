@@ -2,12 +2,12 @@ import { trim, omit, isNil } from 'lodash'
 import { hash } from 'bcrypt'
 import { User, JWT, Listener, Dj } from '../../../global'
 import {
-  ApiService, AbstractInputGetter, AbstractInputValidator,
+  ApiService, IAbstractInputGetter, AbstractInputValidator,
   IRequest, EAccountType, AbstractApiExcutor, makeSure, EHttpStatusCode,
 } from '../../shared'
 import { IInput, IOutput, EError } from './metadata'
 
-export class InputGetter implements AbstractInputGetter<IInput> {
+export class InputGetter implements IAbstractInputGetter<IInput> {
   getInput(req: IRequest): IInput {
     const { email, name, password, accountType } = req.body
     return {

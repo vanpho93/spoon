@@ -21,7 +21,7 @@ describe(TEST_TITLE, () => {
         name: 'First Last',
         password: 'sample',
         accountType: EAccountType.DJ,
-      },
+      }
     )
   })
 })

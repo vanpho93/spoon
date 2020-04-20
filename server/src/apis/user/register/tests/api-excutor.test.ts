@@ -26,7 +26,6 @@ describe(TEST_TITLE, () => {
       deepOmit(result, ['userId', 'created', 'modified']),
       {
         email: 'example@gmail.com',
-        passwordHash: 'SAMPLE_HASH',
         name: 'First Last',
         accountType: EAccountType.DJ,
         token: 'SAMPLE_TOKEN',
@@ -38,8 +37,8 @@ describe(TEST_TITLE, () => {
       deepOmit(user, ['userId', 'created', 'modified']),
       {
         email: 'example@gmail.com',
-        passwordHash: 'SAMPLE_HASH',
         name: 'First Last',
+        passwordHash: 'SAMPLE_HASH',
       }
     )
 

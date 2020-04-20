@@ -2,12 +2,12 @@ import { trim, omit, isNil } from 'lodash'
 import { compare } from 'bcrypt'
 import { User, JWT, Dj, IUser } from '../../../global'
 import {
-  ApiService, AbstractInputGetter, AbstractInputValidator,
+  ApiService, IAbstractInputGetter, AbstractInputValidator,
   IRequest, EAccountType, AbstractApiExcutor, makeSure, mustExist,
 } from '../../shared'
 import { IInput, IOutput, EError } from './metadata'
 
-export class InputGetter implements AbstractInputGetter<IInput> {
+export class InputGetter implements IAbstractInputGetter<IInput> {
   getInput(req: IRequest): IInput {
     const { email, password } = req.body
     return {
@@ -31,7 +31,7 @@ export class InputValidator extends AbstractInputValidator<IInput> {
 
 export class ApiExcutor extends AbstractApiExcutor<IInput, IOutput> {
   private user: IUser
-  
+
   async process() {
     this.user = await User.findOne({ email: this.input.email })
     const accountType = await this.getAccountType()

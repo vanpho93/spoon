@@ -1,5 +1,4 @@
-
-import { TestUtils, TestUserContextBuilder, EAccountType, IUserContext, FollowingRelationship,  } from '../../../../global'
+import { TestUtils, TestUserContextBuilder, IUserContext, FollowingRelationship } from '../../../../global'
 import { ApiExcutor } from '../service'
 import { deepEqual } from 'assert'
 
@@ -55,7 +54,7 @@ describe(TEST_TITLE, () => {
           userId: 2,
           email: 'u2-listener@gmail.com',
           name: 'First Last',
-        }
+        },
       ]
     )
 

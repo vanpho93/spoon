@@ -1,4 +1,4 @@
-import { deepEqual, equal, ok } from 'assert'
+import { equal, ok } from 'assert'
 import { TestUtils } from '../../global'
 import { JWT } from '../jwt'
 
