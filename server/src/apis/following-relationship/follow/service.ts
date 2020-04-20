@@ -14,6 +14,7 @@ export class InputGetter implements AbstractInputGetter<IInput> {
 
 export class InputValidator extends MustBeListenerInputValidator<IInput> {
   async check() {
+    await super.check()
     const isBlocked = await BlockRelationship.isRelationshipBlocked(
       this.userContext.userId,
       this.input.djId
@@ -24,7 +25,7 @@ export class InputValidator extends MustBeListenerInputValidator<IInput> {
     mustExist(dj, EError.CANNOT_FIND_DJ)
 
     const currentRlationship = await FollowingRelationship.findOne({
-      followerId: this.userContext.userId,
+      listenerId: this.userContext.userId,
       djId: this.input.djId,
     })
     makeSure(isNil(currentRlationship), EError.ALREADY_FOLLOWED)
@@ -36,7 +37,7 @@ export class ApiExcutor extends AbstractApiExcutor<IInput, IOutput> {
   
   async process() {
     await FollowingRelationship.create({
-      followerId: this.userContext.userId,
+      listenerId: this.userContext.userId,
       djId: this.input.djId,
     })
     await Listener.findByIdAndUpdate(

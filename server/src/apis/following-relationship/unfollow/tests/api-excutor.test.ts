@@ -20,14 +20,14 @@ describe(TEST_TITLE, () => {
       .isDj()
       .build()
     await FollowingRelationship.create({
-      followerId: listener.userId,
+      listenerId: listener.userId,
       djId: dj.userId,
     })
   })
 
   it(`${TEST_TITLE} ApiExcutor works`, async () => {
     await new ApiExcutor().excute({ djId: dj.userId }, listener)
-    const relationship = await FollowingRelationship.findOne({ followerId: listener.userId, djId: dj.userId })
+    const relationship = await FollowingRelationship.findOne({ listenerId: listener.userId, djId: dj.userId })
     ok(isNil(relationship))
 
     equal((await Dj.findById(dj.userId)).followerCount, -1)

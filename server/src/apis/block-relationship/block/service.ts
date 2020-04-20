@@ -39,10 +39,10 @@ export class ApiExcutor extends AbstractApiExcutor<IInput, IOutput> {
     await this.unfollowByIds(this.userContext.userId, this.input.userId)
   }
 
-  private async unfollowByIds(followerId: number, djId: number) {
-    const isFollowing = await FollowingRelationship.findOneAndDelete({ followerId, djId })
+  private async unfollowByIds(listenerId: number, djId: number) {
+    const isFollowing = await FollowingRelationship.findOneAndDelete({ listenerId, djId })
     if (!isFollowing) return
-    await Listener.findByIdAndUpdate(followerId, {}, builder => builder.decrement('followedCount'))
+    await Listener.findByIdAndUpdate(listenerId, {}, builder => builder.decrement('followedCount'))
     await Dj.findByIdAndUpdate(djId, {}, builder => builder.decrement('followerCount'))
   }
 }

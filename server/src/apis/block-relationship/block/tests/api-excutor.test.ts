@@ -29,7 +29,7 @@ describe(TEST_TITLE, () => {
 
   it(`${TEST_TITLE} ApiExcutor works with follower block dj`, async () => {
     await FollowingRelationship.create({
-      followerId: listener.userId,
+      listenerId: listener.userId,
       djId: dj.userId,
     })
     
@@ -38,7 +38,7 @@ describe(TEST_TITLE, () => {
     equal((await Listener.findById(listener.userId)).followedCount, -1)
     
     const relationship = await FollowingRelationship.findOne({
-      followerId: listener.userId,
+      listenerId: listener.userId,
       djId: dj.userId,
     })
     ok(isNil(relationship))
@@ -46,7 +46,7 @@ describe(TEST_TITLE, () => {
 
   it(`${TEST_TITLE} ApiExcutor works with dj block follower`, async () => {
     await FollowingRelationship.create({
-      followerId: listener.userId,
+      listenerId: listener.userId,
       djId: dj.userId,
     })
     
@@ -55,7 +55,7 @@ describe(TEST_TITLE, () => {
     equal((await Listener.findById(listener.userId)).followedCount, -1)
     
     const relationship = await FollowingRelationship.findOne({
-      followerId: listener.userId,
+      listenerId: listener.userId,
       djId: dj.userId,
     })
     ok(isNil(relationship))

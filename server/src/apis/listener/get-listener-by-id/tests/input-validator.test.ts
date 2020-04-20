@@ -22,30 +22,22 @@ describe(TEST_TITLE, () => {
   })
 
   it(`${TEST_TITLE} InputValidator works with valid input`, async () => {
-    await new InputValidator().validate({ djId: dj.userId }, listener)
+    await new InputValidator().validate({ listenerId: listener.userId }, dj)
   })
 
   it(`${TEST_TITLE} Given non blocked users, it should throw an error`, async () => {
     await BlockRelationship.create({ blockeeId: listener.userId, blockerId: dj.userId })
     const error = await new InputValidator()
-      .validate({ djId: dj.userId }, listener)
+      .validate({ listenerId: listener.userId }, dj)
       .catch(error => error)
-    equal(error.message, EError.CANNOT_FIND_DJ)
+    equal(error.message, EError.CANNOT_FIND_LISTENER)
   })
 
   it(`${TEST_TITLE} Given non existed djId, it should throw an error`, async () => {
-    const NEVER_EXISTS_DJ_ID = 0
+    const NEVER_EXISTS_LISTENER_ID = 0
     const error = await new InputValidator()
-      .validate({ djId: NEVER_EXISTS_DJ_ID }, listener)
+      .validate({ listenerId: NEVER_EXISTS_LISTENER_ID }, dj)
       .catch(error => error)
-    equal(error.message, EError.CANNOT_FIND_DJ)
-  })
-
-  it(`${TEST_TITLE} Given followed users, it should throw an error`, async () => {
-    await FollowingRelationship.create({ listenerId: listener.userId, djId: dj.userId })
-    const error = await new InputValidator()
-      .validate({ djId: dj.userId }, listener)
-      .catch(error => error)
-    equal(error.message, EError.ALREADY_FOLLOWED)
+    equal(error.message, EError.CANNOT_FIND_LISTENER)
   })
 })

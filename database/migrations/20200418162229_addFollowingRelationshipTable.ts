@@ -6,7 +6,7 @@ export async function up(knex: Knex): Promise<void> {
     addPrimaryKey(table, 'following_relationship_id')
 
     addCascadeForeignKey(table, 'user', {
-      columnName: 'follower_id',
+      columnName: 'listener_id',
       notNullable: true,
     })
     addCascadeForeignKey(table, 'dj', {
@@ -14,7 +14,7 @@ export async function up(knex: Knex): Promise<void> {
       foreignColumnName: 'user_id',
       notNullable: true,
     })
-    table.unique(['follower_id', 'dj_id'])
+    table.unique(['listener_id', 'dj_id'])
 
     addCreated(table, knex)
   })

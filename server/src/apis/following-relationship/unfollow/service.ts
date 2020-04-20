@@ -16,7 +16,7 @@ export class InputValidator extends MustBeListenerInputValidator<IInput> {
   async check() {
     await super.check()
     const currentRlationship = await FollowingRelationship.findOne({
-      followerId: this.userContext.userId,
+      listenerId: this.userContext.userId,
       djId: this.input.djId,
     })
     mustExist(currentRlationship, EError.NOT_FOLLOWED)
@@ -28,7 +28,7 @@ export class ApiExcutor extends AbstractApiExcutor<IInput, IOutput> {
   
   async process() {
     await FollowingRelationship.findOneAndDelete({
-      followerId: this.userContext.userId,
+      listenerId: this.userContext.userId,
       djId: this.input.djId,
     })
     await Listener.findByIdAndUpdate(

@@ -1,4 +1,4 @@
-import { TestUtils, TestUserContextBuilder, IUserContext, FollowingRelationship } from '../../../../global'
+import { TestUtils, TestUserContextBuilder, IUserContext, BlockRelationship, FollowingRelationship } from '../../../../global'
 import { InputValidator } from '../service'
 import { equal } from 'assert'
 import { EError } from '../metadata'
@@ -22,17 +22,22 @@ describe(TEST_TITLE, () => {
   })
 
   it(`${TEST_TITLE} InputValidator works with valid input`, async () => {
-    await FollowingRelationship.create({
-      listenerId: listener.userId,
-      djId: dj.userId,
-    })
     await new InputValidator().validate({ djId: dj.userId }, listener)
   })
 
-  it(`${TEST_TITLE} Given has not followed user, it should throw an error`, async () => {
+  it(`${TEST_TITLE} Given non blocked users, it should throw an error`, async () => {
+    await BlockRelationship.create({ blockeeId: listener.userId, blockerId: dj.userId })
     const error = await new InputValidator()
       .validate({ djId: dj.userId }, listener)
       .catch(error => error)
-    equal(error.message, EError.NOT_FOLLOWED)
+    equal(error.message, EError.CANNOT_FIND_DJ)
+  })
+
+  it(`${TEST_TITLE} Given non existed djId, it should throw an error`, async () => {
+    const NEVER_EXISTS_DJ_ID = 0
+    const error = await new InputValidator()
+      .validate({ djId: NEVER_EXISTS_DJ_ID }, listener)
+      .catch(error => error)
+    equal(error.message, EError.CANNOT_FIND_DJ)
   })
 })

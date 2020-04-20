@@ -2,7 +2,7 @@ import { ITimed, ETable, createModel } from './shared'
 
 export interface IFollowingRelationship extends ITimed {
   followingRelationshipId: number
-  followerId: number
+  listenerId: number
   djId: number
 }
 
