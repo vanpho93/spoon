@@ -8,6 +8,11 @@ export class RouteLoader {
   static async load(app: Express) {
     const routes = await RouteFinder.find()
     await Promise.all(routes.map(route => this.appendRoute(app, route)))
+    app.all('*', (req, res) => {
+      res
+        .status(EHttpStatusCode.NOT_FOUND)
+        .send({ success: false, message: 'INVALID_ROUTE' })
+    })
   }
 
   private static async appendRoute(app: Express, route: IRoute) {
@@ -22,12 +27,6 @@ export class RouteLoader {
         const statusCode = isUnexpectedError ? EHttpStatusCode.INTERNAL_SERVER_ERROR : error.statusCode
         res.status(statusCode).send({ success: false, message: this.getErrorMessage(error) })
       }
-    })
-
-    app.all('*', (req, res) => {
-      res
-        .status(EHttpStatusCode.NOT_FOUND)
-        .send({ success: false, message: 'INVALID_ROUTE' })
     })
   }
 

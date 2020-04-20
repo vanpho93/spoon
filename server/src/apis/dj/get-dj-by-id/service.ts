@@ -8,7 +8,7 @@ import { IInput, IOutput, EError } from './metadata'
 
 export class InputGetter implements AbstractInputGetter<IInput> {
   getInput(req: IRequest): IInput {
-    return { djId: Number(req.body.djId) }
+    return { djId: Number(req.params.djId) }
   }
 }
 

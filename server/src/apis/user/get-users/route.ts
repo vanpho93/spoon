@@ -3,6 +3,6 @@ import { Service } from './service'
 
 export const route: IRoute = {
   path: '/user',
-  method: EMethod.POST,
+  method: EMethod.GET,
   service: new Service(),
 }
