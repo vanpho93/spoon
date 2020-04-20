@@ -25,7 +25,7 @@ describe(TEST_TITLE, () => {
     })
   })
 
-  it(`${TEST_TITLE} Can login with DJ account`, async () => {
+  it(`${TEST_TITLE} ApiExcutor works`, async () => {
     await new ApiExcutor().excute({ djId: dj.userId }, listener)
     const relationship = await FollowingRelationship.findOne({ followerId: listener.userId, djId: dj.userId })
     ok(isNil(relationship))

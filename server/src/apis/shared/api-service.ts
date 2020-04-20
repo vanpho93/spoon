@@ -60,20 +60,20 @@ export class SkippedInputValidator extends AbstractInputValidator<null> {
 
 export class MustBeUserInputValidator<Input> extends AbstractInputValidator<Input>{
   async check(): Promise<void> {
-    makeSure(this.userContext.isUser)
+    makeSure(this.userContext.isUser, 'MUST_BE_USER')
   }
 }
 
 export class MustBeListenerInputValidator<Input> extends MustBeUserInputValidator<Input> {
   async check(): Promise<void> {
     await super.check()
-    makeSure(this.userContext.isListener)
+    makeSure(this.userContext.isListener, 'MUST_BE_LISTENER')
   }
 }
 
 export class MustBeDjInputValidator<Input> extends MustBeUserInputValidator<Input> {
   async check(): Promise<void> {
     await super.check()
-    makeSure(this.userContext.isDj)
+    makeSure(this.userContext.isDj, 'MUST_BE_DJ')
   }
 }
