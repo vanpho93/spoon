@@ -23,6 +23,12 @@ export class RouteLoader {
         res.status(statusCode).send({ success: false, message: this.getErrorMessage(error) })
       }
     })
+
+    app.all('*', (req, res) => {
+      res
+        .status(EHttpStatusCode.NOT_FOUND)
+        .send({ success: false, message: 'INVALID_ROUTE' })
+    })
   }
 
   private static getErrorMessage (error: ApiError) {

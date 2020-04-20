@@ -1,6 +1,5 @@
-import { Request } from 'express'
 import { isNil } from 'lodash'
-import { exists, JWT } from '../../global'
+import { exists, JWT, IRequest } from '../../global'
 
 export enum EAccountType {
   LISTENER = 'LISTENER',
@@ -25,11 +24,15 @@ export class UserContext implements IUserContext {
 }
 
 export class UserContextManager {
-  public static async getUserContext(req: Request): Promise<IUserContext> {
-    const { token } = req.headers as { [key: string]: string }
+  public static async getUserContext(req: IRequest): Promise<IUserContext> {
+    const { token } = req.headers
     if (isNil(token)) return new UserContext()
 
-    const { userId, accountType } = await JWT.verifyToken<{ userId: number, accountType: EAccountType }>(token)
-    return new UserContext(userId, accountType)
+    try {
+      const { userId, accountType } = await JWT.verifyToken<{ userId: number, accountType: EAccountType }>(token)
+      return new UserContext(userId, accountType)
+    } catch (error) {
+      return new UserContext()      
+    }
   }
 }
