@@ -1,4 +1,4 @@
-import { TestUtils, TestUserContextBuilder, IUserContext, FollowingRelationship } from '../../../../global'
+import { TestUtils, TestUserContextBuilder, IUserContext, FollowingRelationship, deepOmit } from '../../../../global'
 import { ApiExcutor } from '../service'
 import { deepEqual } from 'assert'
 
@@ -25,29 +25,35 @@ describe(TEST_TITLE, () => {
   it(`${TEST_TITLE} ApiExcutor works`, async () => {
     const response1 = await new ApiExcutor().excute({ page: 1, pageSize: 2 }, dj)
     deepEqual(
-      response1,
+      deepOmit(response1, ['created', 'modified']),
       [
         {
           userId: 1,
           email: 'u1-listener@gmail.com',
           name: 'First Last',
+          isDj: false,
+          isListener: true,
         },
         {
           userId: 2,
           email: 'u2-listener@gmail.com',
           name: 'First Last',
+          isDj: false,
+          isListener: true,
         },
       ]
     )
 
     const response2 = await new ApiExcutor().excute({ page: 2, pageSize: 2 }, dj)
     deepEqual(
-      response2,
+      deepOmit(response2, ['created', 'modified']),
       [
         {
           userId: 3,
           email: 'u3-listener@gmail.com',
           name: 'First Last',
+          isDj: false,
+          isListener: true,
         },
       ]
     )
