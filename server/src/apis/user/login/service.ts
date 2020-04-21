@@ -1,6 +1,6 @@
-import { trim, omit } from 'lodash'
+import { trim } from 'lodash'
 import { compare } from 'bcrypt'
-import { User, JWT, IUser } from '../../../global'
+import { User, JWT, IUser, Password } from '../../../global'
 import {
   ApiService, IAbstractInputGetter, AbstractInputValidator,
   IRequest, AbstractApiExcutor, makeSure, mustExist,
@@ -22,8 +22,9 @@ export class InputValidator extends AbstractInputValidator<IInput> {
     const user = await User.findOne({ email: this.input.email })
     mustExist(user, EError.CANNOT_FIND_EMAIL)
 
+    const password = await Password.findById(user.userId)
     makeSure(
-      await compare(this.input.password, user.passwordHash),
+      await compare(this.input.password, password.passwordHash),
       EError.INVALID_PASSWORD
     )
   }
@@ -35,7 +36,7 @@ export class ApiExcutor extends AbstractApiExcutor<IInput, IOutput> {
   async process() {
     this.user = await User.findOne({ email: this.input.email })
     const token = await JWT.createToken({ userId: this.user.userId })
-    return { ...omit(this.user, 'passwordHash'), token }
+    return { ...this.user, token }
   }
 }
 

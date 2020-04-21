@@ -5,4 +5,4 @@ export interface IInput {
   page: number
 }
 
-export type IOutput = Omit<IUser, 'passwordHash'>[]
+export type IOutput = IUser[]

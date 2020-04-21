@@ -1,5 +1,6 @@
 export * from './shared'
 export * from './user'
+export * from './password'
 export * from './listener'
 export * from './dj'
 export * from './following-relationship'

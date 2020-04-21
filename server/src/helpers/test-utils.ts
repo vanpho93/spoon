@@ -19,7 +19,6 @@ export class TestUserContextBuilder {
     const defaultUser = {
       email: 'example@gmail.com',
       name: 'First Last',
-      passwordHash: '',
       isListener: false,
       isDj: false,
     }

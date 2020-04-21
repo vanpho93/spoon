@@ -1,5 +1,5 @@
 import td from 'testdouble'
-import { User, Dj, FollowingRelationship, Listener, BlockRelationship, LazyFanCounter, knex } from './global'
+import { User, Dj, FollowingRelationship, Listener, BlockRelationship, LazyFanCounter, Password, knex } from './global'
 
 beforeEach(async () => {
   await User.deleteMany({})
@@ -8,6 +8,7 @@ beforeEach(async () => {
   await Listener.deleteMany({})
   await BlockRelationship.deleteMany({})
   await LazyFanCounter.deleteMany({})
+  await Password.deleteMany({})
 })
 
 afterEach(() => {

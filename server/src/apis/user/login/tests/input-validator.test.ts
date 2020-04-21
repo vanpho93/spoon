@@ -1,5 +1,5 @@
 import { hashSync } from 'bcrypt'
-import { TestUtils, User } from '../../../../global'
+import { TestUtils, User, Password } from '../../../../global'
 import { InputValidator } from '../service'
 import { equal } from 'assert'
 import { EError } from '../metadata'
@@ -13,10 +13,13 @@ describe(TEST_TITLE, () => {
   }
 
   beforeEach(async () => {
-    await User.create({
+    const user = await User.create({
       email: sampleInput.email,
-      passwordHash: hashSync(sampleInput.password, 8),
       name: 'First Last',
+    })
+    await Password.create({
+      userId: user.userId,
+      passwordHash: hashSync(sampleInput.password, 8),
     })
   })
 

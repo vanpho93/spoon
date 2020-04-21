@@ -27,7 +27,7 @@ describe(TEST_TITLE, () => {
 
   it(`${TEST_TITLE} Given existed email, it should throw an error`, async () => {
     const AN_EXISTED_EMAIL = 'anexistedemail@gmail.com'
-    await User.create({ email: AN_EXISTED_EMAIL, name: '', passwordHash: '' })
+    await User.create({ email: AN_EXISTED_EMAIL, name: '' })
 
     const error = await new InputValidator()
       .validate({ ...sampleInput, email: AN_EXISTED_EMAIL })

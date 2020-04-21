@@ -8,7 +8,7 @@ export interface IInput {
   isListener: boolean
 }
 
-export type IOutput = Omit<IUser, 'passwordHash'> & { token: string }
+export type IOutput = IUser & { token: string }
 
 export enum EError {
   EMAIL_EXISTED = 'EMAIL_EXISTED',

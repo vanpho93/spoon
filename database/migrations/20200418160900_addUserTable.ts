@@ -9,9 +9,6 @@ export async function up(knex: Knex): Promise<void> {
       .notNullable()
       .unique()
     table
-      .string('password_hash', 256)
-      .notNullable()
-    table
       .string('name', 256)
       .notNullable()
     table.boolean('is_dj').defaultTo(false)

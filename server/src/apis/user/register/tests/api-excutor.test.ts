@@ -1,6 +1,6 @@
 import td from 'testdouble'
 import bcrypt from 'bcrypt'
-import { TestUtils, JWT, deepOmit, User, Dj, Listener } from '../../../../global'
+import { TestUtils, JWT, deepOmit, User, Dj, Listener, Password } from '../../../../global'
 import { ApiExcutor } from '../service'
 import { IInput } from '../metadata'
 import { deepEqual } from 'assert'
@@ -40,7 +40,6 @@ describe(TEST_TITLE, () => {
       {
         email: 'example@gmail.com',
         name: 'First Last',
-        passwordHash: 'SAMPLE_HASH',
         isDj: true,
         isListener: false,
       }
@@ -48,6 +47,11 @@ describe(TEST_TITLE, () => {
 
     const dj = await Dj.findById(user.userId, builder => builder.select(['userId', 'followerCount']))
     deepEqual(dj, { userId: user.userId, followerCount: 0 })
+
+    deepEqual(
+      { userId: user.userId, passwordHash: 'SAMPLE_HASH' },
+      await Password.findById(user.userId, builder => builder.select('userId', 'passwordHash'))
+    )
   })
 
   it(`${TEST_TITLE} Can create LISTENER account`, async () => {

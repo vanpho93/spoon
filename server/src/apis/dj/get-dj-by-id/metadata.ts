@@ -4,7 +4,7 @@ export interface IInput {
   djId: number
 }
 
-export type IOutput = Omit<IUser, 'passwordHash'> & IDj
+export type IOutput = IUser & IDj
 
 export enum EError {
   CANNOT_FIND_DJ = 'CANNOT_FIND_DJ',

@@ -1,6 +1,6 @@
 import { trim, omit, isNil } from 'lodash'
 import { hash } from 'bcrypt'
-import { User, JWT, Listener, Dj } from '../../../global'
+import { User, JWT, Listener, Dj, Password } from '../../../global'
 import {
   ApiService, IAbstractInputGetter, AbstractInputValidator,
   IRequest, AbstractApiExcutor, makeSure, EHttpStatusCode,
@@ -30,14 +30,14 @@ export class InputValidator extends AbstractInputValidator<IInput> {
 
 export class ApiExcutor extends AbstractApiExcutor<IInput, IOutput> {
   async process() {
-    const passwordHash = await hash(this.input.password, 8)
     const user = await User.create({
       email: this.input.email,
       name: this.input.name,
-      passwordHash,
       isDj: this.input.isDj,
       isListener: this.input.isListener,
     })
+    const passwordHash = await hash(this.input.password, 8)
+    await Password.create({ userId: user.userId, passwordHash })
 
     if (this.input.isListener) await Listener.create({ userId: user.userId })
     if (this.input.isDj)  await Dj.create({ userId: user.userId })

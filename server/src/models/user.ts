@@ -6,7 +6,6 @@ export interface IUser extends ITimed {
   name: string
   isDj: boolean
   isListener: boolean
-  passwordHash: string
 }
 
 export class User extends createModel<IUser>(ETable.USER) {}

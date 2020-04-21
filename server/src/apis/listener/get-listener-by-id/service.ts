@@ -1,4 +1,3 @@
-import { omit } from 'lodash'
 import { User, Listener, BlockRelationship } from '../../../global'
 import {
   ApiService, IAbstractInputGetter, IRequest,
@@ -30,7 +29,7 @@ export class ApiExcutor extends AbstractApiExcutor<IInput, IOutput> {
   async process(): Promise<IOutput> {
     const user = await User.findById(this.input.listenerId)
     const listener = await Listener.findById(this.input.listenerId)
-    return { ...omit(user, 'passwordHash'), ...listener }
+    return { ...user, ...listener }
   }
 }
 
