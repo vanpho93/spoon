@@ -1,4 +1,4 @@
-import { TestUtils, EAccountType, User } from '../../../../global'
+import { TestUtils, User } from '../../../../global'
 import { InputValidator } from '../service'
 import { equal } from 'assert'
 import { EError, IInput } from '../metadata'
@@ -10,7 +10,8 @@ describe(TEST_TITLE, () => {
     email: 'example@gmail.com',
     name: 'First Last',
     password: '12345678',
-    accountType: EAccountType.DJ,
+    isDj: true,
+    isListener: false,
   }
 
   it(`${TEST_TITLE} InputValidator works with valid input`, async () => {

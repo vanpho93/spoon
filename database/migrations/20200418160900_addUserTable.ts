@@ -14,6 +14,8 @@ export async function up(knex: Knex): Promise<void> {
     table
       .string('name', 256)
       .notNullable()
+    table.boolean('is_dj').defaultTo(false)
+    table.boolean('is_listener').defaultTo(false)
     addCreated(table, knex)
     // indexing
     table.index(['email'])

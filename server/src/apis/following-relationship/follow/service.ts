@@ -16,7 +16,7 @@ export class InputValidator extends MustBeListenerInputValidator<IInput> {
   async check() {
     await super.check()
     const isBlocked = await BlockRelationship.isRelationshipBlocked(
-      this.userContext.userId,
+      this.userContext.user.userId,
       this.input.djId
     )
     makeSure(!isBlocked, EError.CANNOT_FIND_DJ)
@@ -25,7 +25,7 @@ export class InputValidator extends MustBeListenerInputValidator<IInput> {
     mustExist(dj, EError.CANNOT_FIND_DJ)
 
     const currentRlationship = await FollowingRelationship.findOne({
-      listenerId: this.userContext.userId,
+      listenerId: this.userContext.user.userId,
       djId: this.input.djId,
     })
     makeSure(isNil(currentRlationship), EError.ALREADY_FOLLOWED)
@@ -35,11 +35,11 @@ export class InputValidator extends MustBeListenerInputValidator<IInput> {
 export class ApiExcutor extends AbstractApiExcutor<IInput, IOutput> {
   async process() {
     await FollowingRelationship.create({
-      listenerId: this.userContext.userId,
+      listenerId: this.userContext.user.userId,
       djId: this.input.djId,
     })
     await Listener.findByIdAndUpdate(
-      this.userContext.userId,
+      this.userContext.user.userId,
       {},
       builder => builder.increment('followedCount')
     )

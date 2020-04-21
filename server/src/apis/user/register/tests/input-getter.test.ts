@@ -1,4 +1,4 @@
-import { TestUtils, IRequest, EAccountType } from '../../../../global'
+import { TestUtils, IRequest } from '../../../../global'
 import { InputGetter } from '../service'
 import { deepEqual } from 'assert'
 
@@ -10,8 +10,8 @@ describe(TEST_TITLE, () => {
       body: {
         email: ' example@gmail.com  \n',
         name: ' First Last ',
-        accountType: ' DJ ',
         password: 'sample',
+        isDj: true,
       },
     }
     deepEqual(
@@ -20,7 +20,8 @@ describe(TEST_TITLE, () => {
         email: 'example@gmail.com',
         name: 'First Last',
         password: 'sample',
-        accountType: EAccountType.DJ,
+        isDj: true,
+        isListener: false,
       }
     )
   })

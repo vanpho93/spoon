@@ -10,25 +10,18 @@ describe(TEST_TITLE, () => {
   let dj: IUserContext
 
   beforeEach(async () => {
-    listener = await TestUserContextBuilder
-      .create({ email: 'listener@gmail.com' })
-      .isListener()
-      .build()
-
-    dj = await TestUserContextBuilder
-      .create({ email: 'dj@gmail.com' })
-      .isDj()
-      .build()
+    listener = await TestUserContextBuilder.create({ email: 'listener@gmail.com', isListener: true })
+    dj = await TestUserContextBuilder.create({ email: 'dj@gmail.com', isDj: true })
   })
 
   it(`${TEST_TITLE} InputValidator works with valid input`, async () => {
-    await new InputValidator().validate({ djId: dj.userId }, listener)
+    await new InputValidator().validate({ djId: dj.user.userId }, listener)
   })
 
   it(`${TEST_TITLE} Given non blocked users, it should throw an error`, async () => {
-    await BlockRelationship.create({ blockeeId: listener.userId, blockerId: dj.userId })
+    await BlockRelationship.create({ blockeeId: listener.user.userId, blockerId: dj.user.userId })
     const error = await new InputValidator()
-      .validate({ djId: dj.userId }, listener)
+      .validate({ djId: dj.user.userId }, listener)
       .catch(error => error)
     equal(error.message, EError.CANNOT_FIND_DJ)
   })
@@ -42,9 +35,9 @@ describe(TEST_TITLE, () => {
   })
 
   it(`${TEST_TITLE} Given followed users, it should throw an error`, async () => {
-    await FollowingRelationship.create({ listenerId: listener.userId, djId: dj.userId })
+    await FollowingRelationship.create({ listenerId: listener.user.userId, djId: dj.user.userId })
     const error = await new InputValidator()
-      .validate({ djId: dj.userId }, listener)
+      .validate({ djId: dj.user.userId }, listener)
       .catch(error => error)
     equal(error.message, EError.ALREADY_FOLLOWED)
   })

@@ -1,4 +1,4 @@
-import { TestUtils, TestUserContextBuilder, EAccountType } from '../../../../global'
+import { TestUtils, TestUserContextBuilder } from '../../../../global'
 import { ApiExcutor } from '../service'
 import { deepEqual } from 'assert'
 
@@ -6,19 +6,9 @@ const TEST_TITLE = TestUtils.getTestTitle(__filename)
 
 describe(TEST_TITLE, () => {
   beforeEach(async () => {
-    await TestUserContextBuilder
-      .create({ userId: 1, email: 'u1-listener@gmail.com' })
-      .isListener()
-      .build()
-
-    await TestUserContextBuilder
-      .create({ userId: 2, email: 'u2-listener@gmail.com' })
-      .isListener()
-      .build()
-    await TestUserContextBuilder
-      .create({ userId: 3, email: 'u3-dj@gmail.com' })
-      .isDj()
-      .build()
+    await TestUserContextBuilder.create({ userId: 1, email: 'u1-listener@gmail.com', isListener: true })
+    await TestUserContextBuilder.create({ userId: 2, email: 'u2-listener@gmail.com', isListener: true })
+    await TestUserContextBuilder.create({ userId: 3, email: 'u3-dj@gmail.com', isDj: true })
   })
 
   it(`${TEST_TITLE} ApiExcutor works with not-followed users`, async () => {
@@ -30,13 +20,15 @@ describe(TEST_TITLE, () => {
           userId: 1,
           email: 'u1-listener@gmail.com',
           name: 'First Last',
-          accountType: EAccountType.LISTENER,
+          isListener: true,
+          isDj: false,
         },
         {
           userId: 2,
           email: 'u2-listener@gmail.com',
           name: 'First Last',
-          accountType: EAccountType.LISTENER,
+          isListener: true,
+          isDj: false,
         },
       ]
     )
@@ -49,7 +41,8 @@ describe(TEST_TITLE, () => {
           userId: 3,
           email: 'u3-dj@gmail.com',
           name: 'First Last',
-          accountType: EAccountType.DJ,
+          isListener: false,
+          isDj: true,
         },
       ]
     )

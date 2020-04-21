@@ -15,7 +15,7 @@ export class InputValidator extends MustBeUserInputValidator<IInput> {
   async check() {
     await super.check()
     const isBlocked = await BlockRelationship.isRelationshipBlocked(
-      this.userContext.userId,
+      this.userContext.user.userId,
       this.input.userId
     )
     makeSure(isBlocked, EError.NOT_BLOCKED)
@@ -25,7 +25,7 @@ export class InputValidator extends MustBeUserInputValidator<IInput> {
 export class ApiExcutor extends AbstractApiExcutor<IInput, IOutput> {
   async process() {
     await BlockRelationship.findOneAndDelete({
-      blockerId: this.userContext.userId,
+      blockerId: this.userContext.user.userId,
       blockeeId: this.input.userId,
     })
   }

@@ -67,13 +67,13 @@ export class MustBeUserInputValidator<Input> extends AbstractInputValidator<Inpu
 export class MustBeListenerInputValidator<Input> extends MustBeUserInputValidator<Input> {
   async check(): Promise<void> {
     await super.check()
-    makeSure(this.userContext.isListener, 'MUST_BE_LISTENER')
+    makeSure(this.userContext.user.isListener, 'MUST_BE_LISTENER')
   }
 }
 
 export class MustBeDjInputValidator<Input> extends MustBeUserInputValidator<Input> {
   async check(): Promise<void> {
     await super.check()
-    makeSure(this.userContext.isDj, 'MUST_BE_DJ')
+    makeSure(this.userContext.user.isDj, 'MUST_BE_DJ')
   }
 }

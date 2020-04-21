@@ -4,6 +4,8 @@ export interface IUser extends ITimed {
   userId: number
   email: string
   name: string
+  isDj: boolean
+  isListener: boolean
   passwordHash: string
 }
 

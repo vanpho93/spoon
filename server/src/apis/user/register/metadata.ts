@@ -1,10 +1,11 @@
-import { EAccountType, IUser } from '../../../global'
+import { IUser } from '../../../global'
 
 export interface IInput {
   email: string
   name: string
   password: string
-  accountType: EAccountType
+  isDj: boolean
+  isListener: boolean
 }
 
 export type IOutput = Omit<IUser, 'passwordHash'> & { token: string }

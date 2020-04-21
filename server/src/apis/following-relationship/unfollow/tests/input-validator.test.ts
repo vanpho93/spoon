@@ -10,28 +10,21 @@ describe(TEST_TITLE, () => {
   let dj: IUserContext
 
   beforeEach(async () => {
-    listener = await TestUserContextBuilder
-      .create({ email: 'listener@gmail.com' })
-      .isListener()
-      .build()
-
-    dj = await TestUserContextBuilder
-      .create({ email: 'dj@gmail.com' })
-      .isDj()
-      .build()
+    listener = await TestUserContextBuilder.create({ email: 'listener@gmail.com', isListener: true })
+    dj = await TestUserContextBuilder.create({ email: 'dj@gmail.com', isDj: true })
   })
 
   it(`${TEST_TITLE} InputValidator works with valid input`, async () => {
     await FollowingRelationship.create({
-      listenerId: listener.userId,
-      djId: dj.userId,
+      listenerId: listener.user.userId,
+      djId: dj.user.userId,
     })
-    await new InputValidator().validate({ djId: dj.userId }, listener)
+    await new InputValidator().validate({ djId: dj.user.userId }, listener)
   })
 
   it(`${TEST_TITLE} Given has not followed user, it should throw an error`, async () => {
     const error = await new InputValidator()
-      .validate({ djId: dj.userId }, listener)
+      .validate({ djId: dj.user.userId }, listener)
       .catch(error => error)
     equal(error.message, EError.NOT_FOLLOWED)
   })

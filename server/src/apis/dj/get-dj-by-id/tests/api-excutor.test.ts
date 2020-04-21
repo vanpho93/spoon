@@ -10,22 +10,15 @@ describe(TEST_TITLE, () => {
   let dj: IUserContext
 
   beforeEach(async () => {
-    listener = await TestUserContextBuilder
-      .create({ email: 'listener@gmail.com' })
-      .isListener()
-      .build()
-
-    dj = await TestUserContextBuilder
-      .create({ email: 'dj@gmail.com' })
-      .isDj()
-      .build()
+    listener = await TestUserContextBuilder.create({ email: 'listener@gmail.com', isListener: true })
+    dj = await TestUserContextBuilder.create({ email: 'dj@gmail.com', isDj: true })
   })
 
   it(`${TEST_TITLE} ApiExcutor works with not-followed users`, async () => {
-    const response = await new ApiExcutor().excute({ djId: dj.userId }, listener)
+    const response = await new ApiExcutor().excute({ djId: dj.user.userId }, listener)
     deepEqual(
       omit(response, ['created', 'modified', 'userId', 'name']),
-      { email: 'dj@gmail.com', followerCount: 0 }
+      { email: 'dj@gmail.com', followerCount: 0, isDj: true, isListener: false }
     )
   })
 })

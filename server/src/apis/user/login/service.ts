@@ -1,9 +1,9 @@
-import { trim, omit, isNil } from 'lodash'
+import { trim, omit } from 'lodash'
 import { compare } from 'bcrypt'
-import { User, JWT, Dj, IUser } from '../../../global'
+import { User, JWT, IUser } from '../../../global'
 import {
   ApiService, IAbstractInputGetter, AbstractInputValidator,
-  IRequest, EAccountType, AbstractApiExcutor, makeSure, mustExist,
+  IRequest, AbstractApiExcutor, makeSure, mustExist,
 } from '../../shared'
 import { IInput, IOutput, EError } from './metadata'
 
@@ -34,15 +34,8 @@ export class ApiExcutor extends AbstractApiExcutor<IInput, IOutput> {
 
   async process() {
     this.user = await User.findOne({ email: this.input.email })
-    const accountType = await this.getAccountType()
-    const token = await JWT.createToken({ userId: this.user.userId, accountType })
-    return { ...omit(this.user, 'passwordHash'), accountType, token }
-  }
-
-  private async getAccountType() {
-    const dj = await Dj.findById(this.user.userId)
-    if (isNil(dj)) return EAccountType.LISTENER
-    return EAccountType.DJ
+    const token = await JWT.createToken({ userId: this.user.userId })
+    return { ...omit(this.user, 'passwordHash'), token }
   }
 }
 

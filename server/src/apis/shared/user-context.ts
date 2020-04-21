@@ -1,26 +1,15 @@
 import { isNil } from 'lodash'
-import { exists, JWT, IRequest } from '../../global'
-
-export enum EAccountType {
-  LISTENER = 'LISTENER',
-  DJ = 'DJ',
-}
+import { exists, JWT, IRequest, IUser, User } from '../../global'
 
 export interface IUserContext {
   readonly isUser: boolean
-  readonly isListener: boolean
-  readonly isDj: boolean
-  readonly userId?: number
+  readonly user: IUser
 }
 
 export class UserContext implements IUserContext {
-  constructor(public userId: number = undefined, private accountType: EAccountType = undefined) {}
+  constructor(public readonly user: IUser = null) {}
 
-  get isUser() { return exists(this.userId) }
-
-  get isListener() { return this.accountType === EAccountType.LISTENER }
-
-  get isDj() { return this.accountType === EAccountType.DJ }
+  get isUser() { return exists(this.user) }
 }
 
 export class UserContextManager {
@@ -29,8 +18,9 @@ export class UserContextManager {
     if (isNil(token)) return new UserContext()
 
     try {
-      const { userId, accountType } = await JWT.verifyToken<{ userId: number, accountType: EAccountType }>(token)
-      return new UserContext(userId, accountType)
+      const { userId } = await JWT.verifyToken<{ userId: number }>(token)
+      const user = await User.findById(userId)
+      return new UserContext(user)
     } catch (error) {
       return new UserContext()
     }

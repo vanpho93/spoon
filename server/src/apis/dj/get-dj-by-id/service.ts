@@ -16,7 +16,7 @@ export class InputValidator extends MustBeUserInputValidator<IInput> {
   async check() {
     await super.check()
     const isBlocked = await BlockRelationship.isRelationshipBlocked(
-      this.userContext.userId,
+      this.userContext.user.userId,
       this.input.djId
     )
     makeSure(!isBlocked, EError.CANNOT_FIND_DJ)

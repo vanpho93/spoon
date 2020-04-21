@@ -1,8 +1,8 @@
-import { IUser, EAccountType } from '../../../global'
+import { IUser } from '../../../global'
 
 export interface IInput {
   pageSize: number
   page: number
 }
 
-export type IOutput = (Omit<IUser, 'passwordHash'> & { accountType: EAccountType })[]
+export type IOutput = Omit<IUser, 'passwordHash'>[]

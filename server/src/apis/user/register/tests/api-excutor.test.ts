@@ -1,6 +1,6 @@
 import td from 'testdouble'
 import bcrypt from 'bcrypt'
-import { TestUtils, EAccountType, JWT, deepOmit, User, Dj, Listener } from '../../../../global'
+import { TestUtils, JWT, deepOmit, User, Dj, Listener } from '../../../../global'
 import { ApiExcutor } from '../service'
 import { IInput } from '../metadata'
 import { deepEqual } from 'assert'
@@ -12,7 +12,8 @@ describe(TEST_TITLE, () => {
     email: 'example@gmail.com',
     name: 'First Last',
     password: '12345678',
-    accountType: EAccountType.DJ,
+    isDj: true,
+    isListener: false,
   }
 
   beforeEach(TEST_TITLE, () => {
@@ -27,7 +28,8 @@ describe(TEST_TITLE, () => {
       {
         email: 'example@gmail.com',
         name: 'First Last',
-        accountType: EAccountType.DJ,
+        isDj: true,
+        isListener: false,
         token: 'SAMPLE_TOKEN',
       }
     )
@@ -39,6 +41,8 @@ describe(TEST_TITLE, () => {
         email: 'example@gmail.com',
         name: 'First Last',
         passwordHash: 'SAMPLE_HASH',
+        isDj: true,
+        isListener: false,
       }
     )
 
@@ -47,7 +51,7 @@ describe(TEST_TITLE, () => {
   })
 
   it(`${TEST_TITLE} Can create LISTENER account`, async () => {
-    const result = await new ApiExcutor().excute({ ...sampleInput, accountType: EAccountType.LISTENER })
+    const result = await new ApiExcutor().excute({ ...sampleInput, isDj: false, isListener: true })
     const listener = await Listener.findById(result.userId, builder => builder.select(['userId', 'followedCount']))
     deepEqual(listener, { userId: result.userId, followedCount: 0 })
   })

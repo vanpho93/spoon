@@ -30,7 +30,7 @@ export class ApiExcutor extends AbstractApiExcutor<IInput, IOutput> {
 
   private getFollowingRelationships() {
     const fromIndex = (this.input.page - 1) * this.input.pageSize
-    return FollowingRelationship.findAll({ djId: this.userContext.userId }, builder => {
+    return FollowingRelationship.findAll({ djId: this.userContext.user.userId }, builder => {
       return builder
         .limit(this.input.pageSize)
         .offset(fromIndex)

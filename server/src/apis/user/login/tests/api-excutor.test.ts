@@ -1,5 +1,5 @@
 import td from 'testdouble'
-import { TestUtils, JWT, deepOmit, IUserContext, EAccountType, TestUserContextBuilder } from '../../../../global'
+import { TestUtils, JWT, deepOmit, IUserContext, TestUserContextBuilder } from '../../../../global'
 import { ApiExcutor } from '../service'
 import { deepEqual } from 'assert'
 
@@ -10,16 +10,8 @@ describe(TEST_TITLE, () => {
   let dj: IUserContext
 
   beforeEach(async () => {
-    listener = await TestUserContextBuilder
-      .create({ email: 'listener@gmail.com' })
-      .isListener()
-      .build()
-
-    dj = await TestUserContextBuilder
-      .create({ email: 'dj@gmail.com' })
-      .isDj()
-      .build()
-
+    listener = await TestUserContextBuilder.create({ email: 'listener@gmail.com', isListener: true })
+    dj = await TestUserContextBuilder.create({ email: 'dj@gmail.com', isDj: true })
     td.replace(JWT, 'createToken', () => Promise.resolve('SAMPLE_TOKEN'))
   })
 
@@ -28,10 +20,11 @@ describe(TEST_TITLE, () => {
     deepEqual(
       deepOmit(result, ['created', 'modified', 'name']),
       {
-        userId: dj.userId,
+        userId: dj.user.userId,
         email: 'dj@gmail.com',
         token: 'SAMPLE_TOKEN',
-        accountType: EAccountType.DJ,
+        isDj: true,
+        isListener: false,
       }
     )
   })
@@ -41,9 +34,10 @@ describe(TEST_TITLE, () => {
     deepEqual(
       deepOmit(result, ['created', 'modified', 'name']),
       {
-        userId: listener.userId,
+        userId: listener.user.userId,
         email: 'listener@gmail.com',
-        accountType: EAccountType.LISTENER,
+        isDj: false,
+        isListener: true,
         token: 'SAMPLE_TOKEN',
       }
     )

@@ -15,7 +15,7 @@ export class InputValidator extends MustBeUserInputValidator<IInput> {
   async check() {
     await super.check()
     const isBlocked = await BlockRelationship.isRelationshipBlocked(
-      this.userContext.userId,
+      this.userContext.user.userId,
       this.input.userId
     )
     makeSure(!isBlocked, EError.ALREADY_BLOCKED)
@@ -28,15 +28,15 @@ export class InputValidator extends MustBeUserInputValidator<IInput> {
 export class ApiExcutor extends AbstractApiExcutor<IInput, IOutput> {
   async process() {
     await BlockRelationship.create({
-      blockerId: this.userContext.userId,
+      blockerId: this.userContext.user.userId,
       blockeeId: this.input.userId,
     })
     await this.unfollow()
   }
 
   private async unfollow() {
-    if (this.userContext.isDj) return this.unfollowByIds(this.input.userId, this.userContext.userId)
-    await this.unfollowByIds(this.userContext.userId, this.input.userId)
+    if (this.userContext.user.isDj) return this.unfollowByIds(this.input.userId, this.userContext.user.userId)
+    await this.unfollowByIds(this.userContext.user.userId, this.input.userId)
   }
 
   private async unfollowByIds(listenerId: number, djId: number) {

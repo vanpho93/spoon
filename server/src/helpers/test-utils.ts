@@ -1,4 +1,4 @@
-import { IUser, User, EAccountType, Dj, Listener, UserContext, IUserContext } from '../global'
+import { IUser, User, Dj, Listener, UserContext, IUserContext } from '../global'
 
 export class TestUtils {
   public static getTestTitle(filename: string) {
@@ -10,7 +10,6 @@ export class TestUtils {
 
 export class TestUserContextBuilder {
   private user: Partial<IUser>
-  private accountType: EAccountType
 
   static create(userInput: Partial<IUser>) {
     return new TestUserContextBuilder().create(userInput)
@@ -21,28 +20,17 @@ export class TestUserContextBuilder {
       email: 'example@gmail.com',
       name: 'First Last',
       passwordHash: '',
+      isListener: false,
+      isDj: false,
     }
     this.user = { ...defaultUser, ...userInput }
-    return this
+    return this.save()
   }
 
-  isDj() {
-    return this.setAccountType(EAccountType.DJ)
-  }
-
-  isListener() {
-    return this.setAccountType(EAccountType.LISTENER)
-  }
-
-  private setAccountType(accountType: EAccountType) {
-    this.accountType = accountType
-    return this
-  }
-
-  async build(): Promise<IUserContext> {
+  private async save(): Promise<IUserContext> {
     const user = await User.create(this.user)
-    if (this.accountType === EAccountType.DJ) await Dj.create({ userId: user.userId })
-    if (this.accountType === EAccountType.LISTENER) await Listener.create({ userId: user.userId })
-    return new UserContext(user.userId, this.accountType)
+    if (this.user.isDj) await Dj.create({ userId: user.userId })
+    if (this.user.isListener) await Listener.create({ userId: user.userId })
+    return new UserContext(user)
   }
 }
