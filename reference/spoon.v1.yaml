@@ -27,13 +27,14 @@ paths:
                   value:
                     success: true
                     result:
-                      userId: 2
-                      email: vanho02@gmail.com
+                      userId: 1
+                      email: dj01@gmail.com
                       name: Brian Nguyen
-                      created: '2020-04-20T11:53:38.619Z'
-                      modified: '2020-04-20T11:53:38.619Z'
-                      accountType: LISTENER
-                      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImFjY291bnRUeXBlIjoiTElTVEVORVIiLCJpYXQiOjE1ODczODkyOTksImV4cCI6MTU4ODI1MzI5OX0.fsdSqOXdDYAqexlWusJzClY9Q0B7aQInuLk-p_0Hltg
+                      isDj: true
+                      isListener: false
+                      created: '2020-04-21T12:48:51.673Z'
+                      modified: '2020-04-21T12:48:51.673Z'
+                      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU4NzQ3MzQ5OSwiZXhwIjoxNTg4MzM3NDk5fQ.wDKkCpk8Uv83_0Mf5Qtur3WH2-NyV6ze5VdcYb_0rZk
                 ERROR:
                   value:
                     success: false
@@ -88,23 +89,27 @@ paths:
                   type: string
                 password:
                   type: string
-                accountType:
-                  type: string
+                isDj:
                   enum:
                     - LISTENER
                     - DJ
+                  type: boolean
+                isListener:
+                  type: boolean
               required:
                 - email
                 - name
                 - password
-                - accountType
+                - isDj
+                - isListener
             examples:
               example:
                 value:
-                  email: vanho02@gmail.com
+                  email: dj01@gmail.com
                   password: '12345678'
                   name: Brian Nguyen
-                  accountType: LISTENER
+                  isDj: true
+                  isFollower: false
       responses:
         '200':
           description: OK
@@ -130,7 +135,8 @@ paths:
                       name: Brian Nguyen
                       created: '2020-04-20T14:23:14.055Z'
                       modified: '2020-04-20T14:23:14.055Z'
-                      accountType: LISTENER
+                      isListener: false
+                      isDj: true
                       token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImFjY291bnRUeXBlIjoiTElTVEVORVIiLCJpYXQiOjE1ODczOTI1OTQsImV4cCI6MTU4ODI1NjU5NH0.Xaj8NGiZQgNSGqTUfuHy9u7qklWBomLi3Lwk89FKzAw
         '409':
           description: Conflict
@@ -339,7 +345,7 @@ paths:
         - token: []
   /user:
     get:
-      summary: Get list users
+      summary: Get list users (only for development purposes)
       tags: []
       responses:
         '200':
@@ -356,45 +362,17 @@ paths:
                     items:
                       $ref: '#/components/schemas/PublicUserInfo'
               examples:
-                example-1:
+                success:
                   value:
                     success: true
                     result:
                       - userId: 1
-                        email: vanho01@gmail.com
+                        email: dj01@gmail.com
                         name: Brian Nguyen
-                        accountType: LISTENER
-                      - userId: 2
-                        email: vanho02@gmail.com
-                        name: Brian Nguyen
-                        accountType: LISTENER
-                      - userId: 3
-                        email: vanho04@gmail.com
-                        name: Brian Nguyen
-                        accountType: LISTENER
+                        isDj: true
+                        isListener: false
       operationId: get-user
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            examples:
-              example-1:
-                value:
-                  success: true
-                  result:
-                    - userId: 1
-                      email: vanho01@gmail.com
-                      name: Brian Nguyen
-                      accountType: LISTENER
-                    - userId: 2
-                      email: vanho02@gmail.com
-                      name: Brian Nguyen
-                      accountType: LISTENER
-                    - userId: 3
-                      email: vanho04@gmail.com
-                      name: Brian Nguyen
-                      accountType: LISTENER
+      requestBody: {}
       parameters:
         - schema:
             type: number
@@ -428,11 +406,13 @@ paths:
                   value:
                     success: true
                     result:
-                      userId: 2
-                      email: vanho02@gmail.com
+                      userId: 6
+                      email: listener10@gmail.com
                       name: Brian Nguyen
-                      created: '2020-04-20T11:53:38.624Z'
-                      modified: '2020-04-20T11:53:38.624Z'
+                      isDj: false
+                      isListener: true
+                      created: '2020-04-21T13:14:10.968Z'
+                      modified: '2020-04-21T13:14:10.968Z'
                       followedCount: 0
         '403':
           description: Forbidden
@@ -484,11 +464,13 @@ paths:
                   value:
                     success: true
                     result:
-                      userId: 5
-                      email: vanho06@gmail.com
+                      userId: 1
+                      email: dj01@gmail.com
                       name: Brian Nguyen
-                      created: '2020-04-20T15:02:38.756Z'
-                      modified: '2020-04-20T15:02:38.756Z'
+                      isDj: true
+                      isListener: false
+                      created: '2020-04-21T12:48:51.704Z'
+                      modified: '2020-04-21T12:48:51.704Z'
                       followerCount: 0
         '403':
           description: Forbidden
@@ -536,18 +518,13 @@ paths:
                   value:
                     success: true
                     result:
-                      - userId: 1
-                        email: vanho01@gmail.com
-                        name: Brian Nguyen
-                        accountType: LISTENER
-                      - userId: 2
-                        email: vanho02@gmail.com
-                        name: Brian Nguyen
-                        accountType: LISTENER
                       - userId: 3
-                        email: vanho04@gmail.com
+                        email: listener03@gmail.com
                         name: Brian Nguyen
-                        accountType: LISTENER
+                        isDj: false
+                        isListener: true
+                        created: '2020-04-21T14:10:46.105Z'
+                        modified: '2020-04-21T14:10:46.105Z'
         '401':
           description: Unauthorized
           content:
@@ -567,23 +544,7 @@ paths:
           application/json:
             schema:
               type: object
-            examples:
-              example-1:
-                value:
-                  success: true
-                  result:
-                    - userId: 1
-                      email: vanho01@gmail.com
-                      name: Brian Nguyen
-                      accountType: LISTENER
-                    - userId: 2
-                      email: vanho02@gmail.com
-                      name: Brian Nguyen
-                      accountType: LISTENER
-                    - userId: 3
-                      email: vanho04@gmail.com
-                      name: Brian Nguyen
-                      accountType: LISTENER
+            examples: {}
       parameters:
         - schema:
             type: number
@@ -600,6 +561,8 @@ components:
     User:
       title: User
       type: object
+      x-examples:
+        example-1: {}
       properties:
         userId:
           type: integer
@@ -607,16 +570,16 @@ components:
           type: string
         email:
           type: string
-        accountType:
-          type: string
         token:
           type: string
         created:
           type: string
         modified:
           type: string
-      x-examples:
-        example-1: {}
+        isDj:
+          type: boolean
+        isListener:
+          type: boolean
     Dj:
       title: Dj
       type: object
@@ -633,9 +596,23 @@ components:
           type: string
         modified:
           type: string
+        isDj:
+          type: boolean
+        isListener:
+          type: boolean
     Listener:
       title: Listener
       type: object
+      x-examples:
+        example-1:
+          userId: 6
+          email: listener10@gmail.com
+          name: Brian Nguyen
+          isDj: false
+          isListener: true
+          created: '2020-04-21T13:14:10.968Z'
+          modified: '2020-04-21T13:14:10.968Z'
+          followedCount: 0
       properties:
         userId:
           type: number
@@ -649,6 +626,10 @@ components:
           type: string
         modified:
           type: string
+        isDj:
+          type: boolean
+        isListener:
+          type: boolean
     PublicUserInfo:
       title: PublicUserInfo
       type: object
@@ -659,7 +640,9 @@ components:
           type: string
         name:
           type: string
-        accountType:
+        isDj:
+          type: string
+        isListener:
           type: string
   securitySchemes:
     token:

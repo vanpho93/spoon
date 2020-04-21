@@ -1,4 +1,4 @@
-import { trim, omit, isNil } from 'lodash'
+import { trim, isNil } from 'lodash'
 import { hash } from 'bcrypt'
 import { User, JWT, Listener, Dj, Password } from '../../../global'
 import {
@@ -44,7 +44,7 @@ export class ApiExcutor extends AbstractApiExcutor<IInput, IOutput> {
 
     const token = await JWT.createToken({ userId: user.userId })
     return {
-      ...omit(user, 'passwordHash'),
+      ...user,
       token,
     }
   }

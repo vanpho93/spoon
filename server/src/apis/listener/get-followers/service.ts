@@ -22,9 +22,7 @@ export class ApiExcutor extends AbstractApiExcutor<IInput, IOutput> {
     const followingRelationships = await this.getFollowingRelationships()
     const userIds = map(followingRelationships, 'listenerId')
     return User.findAll({}, builder => {
-      return builder
-        .whereIn('userId', userIds)
-        .select(['userId', 'name', 'email'])
+      return builder.whereIn('userId', userIds)
     })
   }
 
